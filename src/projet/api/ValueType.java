@@ -4,7 +4,9 @@ public enum ValueType {
     NUMBER("number"),
     STRING("string"),
     BOOLEAN("boolean"),
-    NULL("null");
+    NULL("null"),
+    ARRAY("array"),
+    DICT("dict");
 
     private String name;
 

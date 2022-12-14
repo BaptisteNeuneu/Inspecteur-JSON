@@ -1,5 +1,6 @@
 package projet.api;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,19 +9,6 @@ import java.util.Set;
  * Un token peut être un dictionnaire, un tableau ou une valeur au choix de ValueType
  */
 public interface Token {
-    
-    /***
-     * Retourne true ssi le token est un dictionnaire.
-     * @return true ssi le token est un dictionnaire
-     */
-    public boolean isDict();
-
-    /***
-     * Retourne true ssi le token est un tableau.
-     * @return true ssi le token est un tableau
-     */
-    public boolean isArray();
-
     /***
      * Retourne la valeur stockée ssi le token n'est ni un tableau ni un objet.
      * @throws IllegalStateException si le token est un tableau ou un objet
@@ -42,14 +30,19 @@ public interface Token {
      * @throws NullPointerException si value est null
      * @throws IllegalStateException si le token est un tableau ou un objet
      */
-    public Object setValue(Object value) throws NullPointerException, IllegalStateException;
+    public Object setValue(Object value) throws IllegalStateException;
 
     /***
      * Retourne les éléments du token ssi le token est un tableau.
      * @return les éléments du token
      * @throws IllegalStateException si le token n'est pas un tablau
      */
-    public Set<Token> getValues() throws IllegalStateException;
+    public List<Token> getValues() throws IllegalStateException;
+
+    public void setKey(String key);
+
+
+    public String getKey();
 
     /***
      * Retourne les membres du token ssi le token est un objet. 
