@@ -8,9 +8,9 @@ import projet.json.JSONParser;
  */
 public class Interpreter {
     public static void main(String[] args) {
-        String s = "{\n   \"firstName\": \"Joe\",\n   \"lastName\": \"Jackson\",\n   \"gender\": \"male\",\n   \"age\": 28,\n   \"address\": {\n       \"streetAddress\": \"101\",\n       \"city\": \"San Diego\",\n       \"state\": \"CA\"\n   },\n   \"phoneNumbers\": [\n       { \"type\": \"home\", \"number\": \"7349282382\" }\n   ]\n}";
+        String s = "";
 
-        try {
+        try {   
             JSONParser.deserialize(s);
         } catch (JSONFormatException e) {
             System.err.println("Format JSON non-conforme.");

@@ -79,6 +79,7 @@ public class JSONParser {
      */
     public static Tree<Token> deserialize(String json) throws JSONFormatException {
         if (!checkBlocks(json)) throw new JSONFormatException();
+        json.replaceAll("\n", "");
 
         Tree<Token> tree = new JSONTree();
         return tree;
