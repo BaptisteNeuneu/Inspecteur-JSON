@@ -1,29 +1,30 @@
 package projet.json;
 
+import projet.api.Token;
 import projet.api.Tree;
 import projet.api.TreePath;
 
 /***
  * Implémentation de la classe Tree pour les documents JSON.
  */
-public class JSONTree implements Tree<JSONToken> {
+public class JSONTree implements Tree<Token> {
 
-    private JSONToken root;
+    private Token root;
 
     @Override
-    public JSONToken add(JSONToken object, TreePath path) {
+    public JSONToken add(Token object, TreePath path) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public JSONToken remove(TreePath path) {
+    public Token remove(TreePath path) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public JSONToken get(TreePath path) {
+    public Token get(TreePath path) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -35,13 +36,13 @@ public class JSONTree implements Tree<JSONToken> {
     }
 
     @Override
-    public boolean contains(JSONToken value) {
+    public boolean contains(Token value) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public JSONToken getRoot() {
+    public Token getRoot() {
         return root;
     }
     
