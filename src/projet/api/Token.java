@@ -39,11 +39,6 @@ public interface Token {
      */
     public List<Token> getValues() throws IllegalStateException;
 
-    public void setKey(String key);
-
-
-    public String getKey();
-
     /***
      * Retourne les membres du token ssi le token est un objet. 
      * @return les membres du token

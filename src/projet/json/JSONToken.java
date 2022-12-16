@@ -15,6 +15,35 @@ public class JSONToken implements Token {
     private Map<String, Token> dict;
     private List<Token> list;
 
+    public JSONToken(String value) {
+        this.valueType = ValueType.STRING;
+        this.value = value;
+    }
+
+    public JSONToken(Number value) {
+        this.valueType = ValueType.NUMBER;
+        this.value = value;
+    }
+
+    public JSONToken(Boolean value) {
+        this.valueType = ValueType.BOOLEAN;
+        this.value = value;
+    }
+
+    public JSONToken(Map<String, Token> dict) {
+        this.valueType = ValueType.DICT;
+        this.dict = dict;
+    }
+
+    public JSONToken(List<Token> list) {
+        this.valueType = ValueType.ARRAY;
+        this.list = list;
+    }
+
+    public JSONToken() {
+        this.valueType = ValueType.NULL;
+    }
+
     @Override
     public Object getValue() throws IllegalStateException {
         if (valueType == ValueType.DICT) throw new IllegalStateException("Impossible d'accéder à la valeur d'un token dict.");
@@ -48,17 +77,4 @@ public class JSONToken implements Token {
         if (valueType != ValueType.DICT) throw new IllegalStateException("Impossible d'accéder à la valeur d'un token non dict.");
         return dict.entrySet();
     }
-
-    @Override
-    public void setKey(String key) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public String getKey() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
 }

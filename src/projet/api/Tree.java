@@ -7,7 +7,7 @@ package projet.api;
 public interface Tree<T> {
 
     /***
-     * Ajoute un object dans l'arbre au chemin d'accès donné.
+     * Ajoute un objet dans l'arbre au chemin d'accès donné.
      * Retourne l'objet précédemment stocké à cet endroit ou null.
      * @param object l'objet à stocker
      * @param path le chemin d'accès à l'objet
@@ -15,21 +15,21 @@ public interface Tree<T> {
      * @throws NullPointerException si object ou path est null
      * @throws IllegalStateException si le parent de l'objet au chemin donné est inexistant
     */  
-    public T add(T object, TreePath path);
+    public T add(T object, String path);
 
     /***
      * Supprime l'objet de l'arbre au chemin d'accès donné et le retourne.
      * @param path le chemin d'accès à l'objet
      * @return l'object précédemment stocké à cet endroit ou null
      */
-    public T remove(TreePath path);
+    public T remove(String path);
 
     /***
      * Retourne l'objet contenu au chemin d'accès donné ou null.
      * @param path le chemin d'accès à l'objet
      * @return l'objet contenu au chemin d'accès donné ou null
      */
-    public T get(TreePath path);
+    public T get(String path);
 
 
     /***
@@ -37,11 +37,11 @@ public interface Tree<T> {
      * @param path le chemin d'accès à vérifier
      * @return true ssi un objet existe au chemin d'accès donné
      */
-    public boolean pathExists(TreePath path);
+    public boolean pathExists(String path);
     
 
     /***
-     * Retoure true ssi l'arbre contient l'objet demandé.
+     * Retourne true ssi l'arbre contient l'objet demandé.
      * @param value l'objet à vérifier
      * @return true ssi l'arbre contient l'objet demandé
      */
@@ -52,4 +52,10 @@ public interface Tree<T> {
      * @return la racine de l'arbre
      */
     public T getRoot();
+    
+    /***
+     * Définit la racine de l'arbre.
+     * @param root la nouvelle racine
+     */
+    public void setRoot(T root);
 }
