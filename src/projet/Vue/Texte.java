@@ -3,6 +3,9 @@ package projet.Vue;
 import javax.sql.rowset.CachedRowSet;
 
 public class Texte {
+
+    String newText;
+
     public String ReadString(String a){
         for(char character : a.toCharArray()){
             switch (character){
@@ -20,8 +23,12 @@ public class Texte {
                     case '\r':
 
                     case '\t':
+
+                    default :
+                    newText= newText + character;
                 }
                  
-            } 
+            }
+            return newText;
         }
     }
