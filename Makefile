@@ -24,12 +24,8 @@ api :	$(BLD)/api/Tree.class \
 		$(BLD)/api/Token.class \
 		$(BLD)/api/TreeFormatter.class
 
-$(BLD)/api/Tree.class :	$(SRC)/api/Tree.java \
-						$(BLD)/api/TreePath.class
+$(BLD)/api/Tree.class :	$(SRC)/api/Tree.java
 	javac $(JC_OPT) $(SRC)/api/Tree.java
-
-$(BLD)/api/TreePath.class : $(SRC)/api/TreePath.java
-	javac $(JC_OPT) $(SRC)/api/TreePath.java
 
 $(BLD)/api/Token.class :	$(SRC)/api/Token.java \
 							$(BLD)/api/ValueType.class
