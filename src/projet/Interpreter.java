@@ -17,7 +17,7 @@ public class Interpreter {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (BufferedReader fr = new BufferedReader(new InputStreamReader(cl.getResourceAsStream("json_examples/json1.json")))) {
             String s = "";
-            while (fr.ready()) s += "\n" + fr.readLine();
+            while (fr.ready()) s += fr.readLine();
             JSONParser.deserialize(s);
         } catch (JSONFormatException e) {
             System.err.println("Format JSON non-conforme.");

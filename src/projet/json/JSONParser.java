@@ -1,6 +1,9 @@
 package projet.json;
 
 import java.util.ArrayDeque;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import projet.api.Token;
 import projet.api.Tree;
@@ -71,6 +74,14 @@ public class JSONParser {
         return true;
     }
 
+    private static void treatObject(String object, Tree<Token> tree) {
+
+    }
+
+    private static void treatBoolean(String bool, Tree<Token> tree) {
+
+    }
+
     /***
      * Convertit un fichier JSON sous forme de texte en arborescence.
      * @param json Le fichier JSON à convertir
@@ -78,10 +89,23 @@ public class JSONParser {
      * @throws JSONFormatException le fichier JSON est malformé
      */
     public static Tree<Token> deserialize(String json) throws JSONFormatException {
-        if (!checkBlocks(json)) throw new JSONFormatException();
+        Objects.requireNonNull(json, "Cannot accept null JSON string");
+        if (json == "") throw new JSONFormatException("Cannot accept empty JSON string");
+        if (!checkBlocks(json)) throw new JSONFormatException("Invalid block formatting");
 
         Tree<Token> tree = new JSONTree();
-        
+
+        Pattern p = Pattern.compile("^\\{(.*)\\}|^(true|false)|^\\[(.*)\\]|^(null)|^\\\"(.*)\\\"");
+        Matcher m = p.matcher(json);
+
+        if (m.find()) {
+            for (int i = 0; i < 6; i++) {
+                if (m.group(i) != null) System.out.print("!");
+                System.out.println(i + ": " + m.group(i));
+            }
+        } else {
+            System.out.println("Number");
+        }
         
         return tree;
     }
