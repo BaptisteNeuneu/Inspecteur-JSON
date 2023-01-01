@@ -75,7 +75,7 @@ public class JSONParser {
     }
 
     private static void treatObject(Tree<Token> tree, String currentPath, String object) {
-        
+        Pattern p = Pattern.compile("");
     }
 
     private static void treatTable(Tree<Token> tree, String currentPath, String table) {
@@ -117,47 +117,29 @@ public class JSONParser {
      * @throws JSONFormatException le morceau de donnée JSON est invalide
      */
     private static String[] getFirstValueAndType(String json) throws JSONFormatException {
-        
-        // 10/10 expression régulière
-        Pattern p = Pattern.compile("^\\{(.*)\\}|^\\[(.*)\\]|^(true|false)|^(null)|^\\\"(.*)\\\"|^([0-9\\.\\-\\+eE]*)");
-        Matcher m = p.matcher(json);
+        char firstChar = json.charAt(0);
 
-        //Cherche la première valeur JSON à traiter, en détermine le type et renvoie l'ensemble.
-        if (m.find()) {
-            /* 1: Objet
-               2: Tableau
-               3: Booléen
-               4: Null
-               5: String
-               6: Nombre
-            */
+        switch (firstChar) {
+            case 't':
+                return new String[] {"BOOLEAN", "true"};
 
-            int found = 0;
-            for (int i = 1; i < 7; i++) {
-                if (m.group(i) != null) {
-                    found = i;
-                    break;
+            case 'f':
+                return new String[] {"BOOLEAN", "false"};
+
+            case 'n':
+                return new String[] {"NULL", "null"};
+
+            case '{': {
+                int index = 1;
+                int count = 1;
+                boolean escaping = false;
+                boolean inString = false;
+                boolean justEscaped = false;
+
+                while (count > 0) {
+                    
                 }
             }
-
-            switch (found) {
-                case 1:
-                    return new String[] {"OBJECT", m.group(found)};
-                case 2:
-                    return new String[] {"TABLE", m.group(found)};
-                case 3:
-                    return new String[] {"BOOLEAN", m.group(found)};
-                case 4:
-                    return new String[] {"NULL"};
-                case 5:
-                    return new String[] {"STRING", m.group(found)};
-                case 6:
-                    return new String[] {"NUMBER", m.group(found)};
-                default:
-                    throw new JSONFormatException("Invalid value formatting");
-            }
-        } else {
-            throw new JSONFormatException("Value type not recognised");
         }
     }
 
