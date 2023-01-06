@@ -44,5 +44,5 @@ public interface Token {
      * @return les membres du token
      * @throws IllegalStateException si le token n'est pas un objet
      */
-    public Set<Map.Entry<String, Token>> getMembers() throws IllegalStateException;
+    public Map<String, Token> getMembers() throws IllegalStateException;
 }

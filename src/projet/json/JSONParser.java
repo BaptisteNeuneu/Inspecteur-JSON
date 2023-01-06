@@ -2,19 +2,11 @@ package projet.json;
 
 import java.util.ArrayDeque;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import projet.api.Token;
 import projet.api.Tree;
 
 public class JSONParser {
-
-    private enum BlockType {
-        SQUARE,
-        CURLY
-    }
-
 
     /***
      * Vérifie si les blocs JSON sont correctement faits.
@@ -73,75 +65,7 @@ public class JSONParser {
 
         return true;
     }
-
-    private static void treatObject(Tree<Token> tree, String currentPath, String object) {
-        Pattern p = Pattern.compile("");
-    }
-
-    private static void treatTable(Tree<Token> tree, String currentPath, String table) {
-        System.out.println("table");
-    }
-
-    private static void treatBoolean(Tree<Token> tree, String currentPath, String bool) {
-        switch (bool) {
-            case "true":
-                tree.add(new JSONToken(true), currentPath);
-                break;
-            case "false":
-                tree.add(new JSONToken(false), currentPath);
-                break;
-        }
-
-        System.out.println("Boolean : " + bool);
-    }
-
-    private static void treatNull(Tree<Token> tree, String currentPath) {
-        tree.add(new JSONToken(), currentPath);
-        System.out.println("Null");
-    }
-
-    private static void treatString(Tree<Token> tree, String currentPath, String string) {
-        tree.add(new JSONToken(string), currentPath);
-        System.out.println("String : " + string);
-    }
-
-    private static void treatNumber(Tree<Token> tree, String currentPath, String number) {
-        
-        System.out.println("Number : " + number);
-    }
-
-    /**
-     * Retourne la première valeur à traiter et son type dans un tableau
-     * @param json le morceau de donnée JSON à traiter
-     * @return un tableau de String contenant le type et la première valeur
-     * @throws JSONFormatException le morceau de donnée JSON est invalide
-     */
-    private static String[] getFirstValueAndType(String json) throws JSONFormatException {
-        char firstChar = json.charAt(0);
-
-        switch (firstChar) {
-            case 't':
-                return new String[] {"BOOLEAN", "true"};
-
-            case 'f':
-                return new String[] {"BOOLEAN", "false"};
-
-            case 'n':
-                return new String[] {"NULL", "null"};
-
-            case '{': {
-                int index = 1;
-                int count = 1;
-                boolean escaping = false;
-                boolean inString = false;
-                boolean justEscaped = false;
-
-                while (count > 0) {
-                    
-                }
-            }
-        }
-    }
+    
 
     /***
      * Convertit un fichier JSON sous forme de texte en arborescence.
@@ -150,40 +74,51 @@ public class JSONParser {
      * @throws JSONFormatException le fichier JSON est malformé
      */
     public static Tree<Token> deserialize(String json) throws JSONFormatException {
+
+        // Vérifications
         Objects.requireNonNull(json, "Cannot accept null JSON string");
         if (json == "") throw new JSONFormatException("Cannot accept empty JSON string");
         if (!checkBlocks(json)) throw new JSONFormatException("Invalid block formatting");
 
+        // On crée l'arbre et on commence à traiter les données
         Tree<Token> tree = new JSONTree();
+        
+        JSONToken root;
 
-        String[] valueAndType = getFirstValueAndType(json);
+        json = json.trim();
 
-        switch (valueAndType[0]) {
-            case "OBJECT":
-                treatObject(tree, ".", valueAndType[1]);
+        switch (json.charAt(0)) {
+            case '[':
+                root = JSONValueParser.treatTable(json);
                 break;
 
-            case "TABLE":
-                treatTable(tree, ".", valueAndType[1]);
+            case '{':
+                root = JSONValueParser.treatObject(json);
                 break;
 
-            case "BOOLEAN":
-                treatBoolean(tree, ".", valueAndType[1]);
+            case 't':
+                root = JSONValueParser.treatBoolean(json);
                 break;
 
-            case "NULL":
-                treatNull(tree, ".");
+            case 'f':
+                root = JSONValueParser.treatBoolean(json);
                 break;
 
-            case "String":
-                treatString(tree, ".", valueAndType[1]);
+            case 'n':
+                root = JSONValueParser.treatNull(json);
                 break;
 
-            case "NUMBER":
-                treatNumber(tree, ".", valueAndType[1]);
+            case '"':
+                root = JSONValueParser.treatString(json);
+                break;
+
+            default:
+                root = JSONValueParser.treatNumber(json);
                 break;
         }
-        
+
+        tree.add(root, "");
+
         return tree;
     }
 }

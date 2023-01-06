@@ -73,8 +73,8 @@ public class JSONToken implements Token {
     }
 
     @Override
-    public Set<Entry<String, Token>> getMembers() throws IllegalStateException {
+    public Map<String, Token> getMembers() throws IllegalStateException {
         if (valueType != ValueType.DICT) throw new IllegalStateException("Impossible d'accéder à la valeur d'un token non dict.");
-        return dict.entrySet();
+        return dict;
     }
 }

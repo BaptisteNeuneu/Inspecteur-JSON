@@ -13,7 +13,8 @@ public interface Tree<T> {
      * @param path le chemin d'accès à l'objet
      * @return l'objet précédemment stocké à cet endroit ou null
      * @throws NullPointerException si object ou path est null
-     * @throws IllegalStateException si le parent de l'objet au chemin donné est inexistant
+     * @throws IllegalStateException si le parent de l'objet au chemin donné est du mauvais type ou inexistant
+     * @throws IllegalArgumentException si le chemin donné passe par des token non array / dict
     */  
     public T add(T object, String path);
 
