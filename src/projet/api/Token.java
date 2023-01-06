@@ -2,7 +2,6 @@ package projet.api;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /***
  * Représente un token dans une arborescence de données d'un Tree.

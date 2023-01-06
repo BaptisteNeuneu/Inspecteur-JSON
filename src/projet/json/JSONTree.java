@@ -2,7 +2,6 @@ package projet.json;
 
 import projet.api.Token;
 import projet.api.Tree;
-import projet.api.ValueType;
 
 /***
  * Implémentation de la classe Tree pour les documents JSON.
@@ -56,7 +55,7 @@ public class JSONTree implements Tree<Token> {
             }
         }
 
-
+        return null;
     }
 
     @Override
