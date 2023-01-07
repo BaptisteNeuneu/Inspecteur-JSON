@@ -52,6 +52,8 @@ public class JSONTree implements Tree<Token> {
                     break;
                 default:
                     throw new IllegalArgumentException("Path goes through non ARRAY or DICT Tokens.");
+
+
             }
         }
 
@@ -59,26 +61,177 @@ public class JSONTree implements Tree<Token> {
     }
 
     @Override
-    public Token remove(String path) {
-        // TODO Auto-generated method stub
-        return null;
+    public Token remove(String path) {   
+        if (path == "") {  
+            Token oldRoot = root;  
+            root = null;   
+            return oldRoot;  
+        }
+
+        String[] pathSteps = path.split("\\.");  
+        Token currToken = root;  
+
+        for (int i = 0; i < pathSteps.length; i++) {  
+            String step = pathSteps[i]; 
+
+            switch (currToken.getValueType()) {    
+                case ARRAY:  
+                    try {    
+                        int index = Integer.parseInt(step);  
+
+                        if (i == pathSteps.length - 1) {    
+                            return currToken.getValues().remove(index);    
+                        }  
+
+                        currToken = currToken.getValues().get(index);    
+                    } catch (NumberFormatException e) {  
+                        throw new IllegalStateException("Non number index found with an array type token.");    
+                    } catch (IndexOutOfBoundsException e) {  
+                        throw new IllegalStateException("Token index out of bounds");    
+                    }  
+                    break;  
+                case DICT:  
+                    if (i == pathSteps.length - 1) {    
+                        return currToken.getMembers().remove(step);    
+                    }  
+
+                    if (!currToken.getMembers().containsKey(step))    
+                        throw new IllegalStateException("Unknwown dict member '" + step + "'");    
+
+                    currToken = currToken.getMembers().get(step);    
+                    break;  
+                default:    
+                    throw new IllegalArgumentException("Path goes through non ARRAY or DICT Tokens.");    
+
+
+            }
+        }
+
+        return null;   
     }
 
     @Override
     public Token get(String path) {
-        // TODO Auto-generated method stub
-        return null;
+        if (path == "") {
+            return root;
+        }
+
+        String[] pathSteps = path.split("\\.");
+        Token currToken = root;
+
+        for (int i = 0; i < pathSteps.length; i++) {
+            String step = pathSteps[i];
+
+            switch (currToken.getValueType()) {
+                case ARRAY:
+                    try {
+                        int index = Integer.parseInt(step);
+                        currToken = currToken.getValues().get(index);
+                    } catch (NumberFormatException e) {
+                        throw new IllegalStateException("Non number index found with an array type token.");
+                    } catch (IndexOutOfBoundsException e) {
+                        throw new IllegalStateException("Token index out of bounds");
+                    }
+                    break;
+                case DICT:
+                    if (!currToken.getMembers().containsKey(step))
+                        throw new IllegalStateException("Unknwown dict member '" + step + "'");
+
+                    currToken = currToken.getMembers().get(step);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Path goes through non ARRAY or DICT Tokens.");
+
+
+            }
+        }
+
+        return currToken;
     }
 
     @Override
-    public boolean pathExists(String path) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean pathExists(String path) {   
+        if (path == "") {  
+            return true;   
+        }
+
+        String[] pathSteps = path.split("\\.");   
+        Token currToken = root;   
+
+        for (int i = 0; i < pathSteps.length; i++) {   
+            String step = pathSteps[i];  
+
+            switch (currToken.getValueType()) {    
+                case ARRAY:    
+                    try {     
+                        int index = Integer.parseInt(step);  
+
+                        if (i == pathSteps.length - 1) {    
+                            return true;  
+                        }  
+
+                        currToken = currToken.getValues().get(index);    
+                    } catch (NumberFormatException e) {  
+                        throw new IllegalStateException("Non number index found with an array type token.");    
+                    } catch (IndexOutOfBoundsException e) {  
+                        return false;   
+                    }  
+                    break;  
+                case DICT:   
+                    if (i == pathSteps.length - 1) {    
+                        return currToken.getMembers().containsKey(step);  
+                    }  
+
+                    if (!currToken.getMembers().containsKey(step))    
+                        return false;  
+
+                    currToken = currToken.getMembers().get(step);    
+                    break;  
+                default:    
+                    throw new IllegalArgumentException("Path goes through non ARRAY or DICT Tokens.");    
+
+
+            }
+        }
+
+        return false;   
     }
 
     @Override
     public boolean contains(Token value) {
-        // TODO Auto-generated method stub
+        if (root == null) {
+            return false;
+        }
+
+        return contains(root, value);
+    }
+
+    private boolean contains(Token node, Token value) {
+        if (node.equals(value)) {
+            return true;
+        }
+
+        switch (node.getValueType()) {
+            case ARRAY:
+                for (Token t : node.getValues()) {
+                    if (contains(t, value)) {
+                        return true;
+                    }
+                }
+                break;
+            case DICT:
+                for (Token t : node.getMembers().values()) {
+                    if (contains(t, value)) {
+                        return true;
+                    }
+                }
+                break;
+            default: 
+                throw new IllegalArgumentException("Path goes through non ARRAY or DICT Tokens."); 
+                                                                                                   
+
+        }
+
         return false;
     }
 
