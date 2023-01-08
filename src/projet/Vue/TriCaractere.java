@@ -1,44 +1,57 @@
 import projet.api.Token;
 import projet.json.JSONToken;
 import projet.json.JSONTree;
+import projet.api.Tree;
+import projet.api.Token;
 
 public class TriCaractere {
-    Texte text = new Texte();
-    Nombre nombre = new Nombre();
+    
     JSONArray tableau = new JSONArray();
-    JSONBoolean bool = new JSONBoolean();
-    JSONWhitespace escape = new JSONWhitespace();
+    Token feuille = new JSONToken();
+    String root = "";
 
-    public void Pu(String a){
+    public void PrintConsole(Tree<Token> arbre){
 
         
-        JSONTree arbre = new JSONTree();
-        JSONToken feuille = new JSONToken();
-        for(feuille : arbre){
-            a = feuille.getValueType();
-            switch(a){
-                case String :
-                String texte = feuille.getValue();
-                text.ReadString(texte);
-                case Number :
-                String num = feuille.getValue();
-                nombre.ReadNombre(num);
 
-                case Boolean :
-                String vraifaux = feuille.getValue();
-                bool.Readboolean(vraifaux);
-
-                case NULL :
-                String espace = feuille.getValue();
-                escape.ReadWhiteSpace(espace);
-
+        while(arbre.pathExists(root) == true){
+            feuille = arbre.get(root);
+            System.out.println("le path est :" + root);
+            switch(feuille.getValueType()){
                 case ARRAY :
-                String tab = feuille.getValue();
+                String tab = (String)feuille.getValue();
                 tableau.ReadArray(tab);
+                root = root + tab;
+                
                 case DICT :
+                String object = (String)feuille.getValue();
+
+                
+                default :
+
+            }
+             
+        }
+
+    }
+
+    public void PrintWindow(Tree<Token> arbre){
+
+        while (arbre.pathExists(root) == true) {
+            feuille = arbre.get(root);
+            switch (feuille.getValueType()) {
+                case ARRAY:
+                    String tab = (String) feuille.getValue();
+                    tableau.ReadArray(tab);
+                    root = root + tab;
+
+                case DICT:
+                    String object = (String) feuille.getValue();
+
+                default:
+
             }
 
         }
-
     }
 }
