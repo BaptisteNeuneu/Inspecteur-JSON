@@ -36,6 +36,7 @@ public class TriCaractere {
     }
 
     public void PrintWindow(Tree<Token> arbre){
+        new window();
 
         while (arbre.pathExists(root) == true) {
             feuille = arbre.get(root);

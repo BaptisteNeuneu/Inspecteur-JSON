@@ -42,6 +42,6 @@ public class Texte {
                 }
                  
             }
-            return newText;
+            System.out.print(newText);
         }
     }

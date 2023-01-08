@@ -160,6 +160,6 @@ public class Nombre {
         }
 
 
-        return newNombre;
+        System.out.print(newNombre);
     }
 }
