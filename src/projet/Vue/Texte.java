@@ -1,13 +1,12 @@
 package projet.Vue;
 
-import javax.sql.rowset.CachedRowSet;
 
 public class Texte {
 
     String newText;
     boolean backslach = false;
 
-    public String ReadString(String a){
+    public void ReadString(String a){
         for(char character : a.toCharArray()){
             if(backslach == true){
                switch(character){

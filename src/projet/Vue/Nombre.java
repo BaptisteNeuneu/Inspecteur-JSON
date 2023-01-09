@@ -1,3 +1,5 @@
+package projet.Vue;
+
 public class Nombre {
 
     String newNombre;
@@ -5,7 +7,7 @@ public class Nombre {
     boolean nombre = false;
     boolean presenceoperateur = false;
     boolean fraction = false;
-    public String ReadNombre(String num){
+    public void ReadNombre(String num){
         for(char character : num.toCharArray()){
             if(fraction == true){
                 switch(character){

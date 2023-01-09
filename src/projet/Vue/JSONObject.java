@@ -1,20 +1,42 @@
+package projet.Vue;
+
+import java.util.Map;
+import projet.api.Token;
+
 public class JSONObject {
-    public void ReadArray(String tableau){
-        for(char charactere : tableau.toCharArray()){
-            switch(charactere){
-                case '[':
-                System.out.println(charactere);
 
-                case ',':
-                newtableau = newtableau + charactere;
-                System.out.println(newtableau);
-                newtableau = "";
+    String path;
+    JSONBoolean bool = new JSONBoolean();
+    Texte text = new Texte();
+    Nombre nombre = new Nombre();
+    JSONWhitespace escape= new JSONWhitespace();  
+    String newlist;
+    public void ReadObjectConsole(Map<String, Token> dict){
+        for(Token token : dict.values()){
+            switch(token.getValueType()){
+                case DICT:
+                
 
-                case ']':
-                System.out.println(newtableau);
-                System.out.println(charactere);
+                case ARRAY:
 
-                default:
-                newtableau = newtableau+charactere;
+
+                case STRING :
+                String texte = (String)token.getValue();
+                text.ReadString(texte);
+                case NUMBER :
+                String num = (String)token.getValue();
+                nombre.ReadNombre(num);
+
+                case BOOLEAN :
+                String vraifaux = (String)token.getValue();
+                bool.Readboolean(vraifaux);
+
+                case NULL :
+                String espace = (String)token.getValue();
+                escape.ReadWhiteSpace(espace);
+
+
             } 
+        }
+    }
 }

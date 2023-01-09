@@ -1,3 +1,5 @@
+package projet.Vue;
+
 public class JSONBoolean {
 
     String newBoolean;
