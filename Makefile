@@ -41,8 +41,16 @@ $(BLD)/api/TreeFormatter.class :	$(SRC)/api/TreeFormatter.java \
 
 json :	api $(BLD)/json/JSONParser.class
 
+$(BLD)/json/BlockType.class : $(SRC)/json/BlockType.java 
+	javac $(JC_OPT) $(SRC)/json/BlockType.java
+
+$(BLD)/json/JSONValueParser.class : $(SRC)/json/JSONValueParser.java 
+	javac $(JC_OPT) $(SRC)/json/JSONValueParser.java
+
 $(BLD)/json/JSONParser.class :	$(SRC)/json/JSONParser.java \
 								$(BLD)/json/JSONTree.class \
+								$(BLD)/json/BlockType.class \
+								$(BLD)/json/JSONValueParser.class \
 								$(BLD)/json/JSONFormatException.class
 	javac $(JC_OPT) $(SRC)/json/JSONParser.java
 
