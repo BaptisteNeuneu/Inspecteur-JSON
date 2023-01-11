@@ -25,7 +25,7 @@ public class Window {
         return window;
     }
 
-    public void setWindow(JFrame Window){
+    public void setWindow(JFrame window){
         this.window = window;
     }
 }

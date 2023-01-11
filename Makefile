@@ -7,7 +7,7 @@ JC_OPT = -implicit:none -d build -classpath build -sourcepath "src:tmp"
 
 MAIN_PATH = $(PROJECT_PATH).Interpreter
 
-JAR_NAME = projet.jar
+JAR_NAME = Inspecteur.jar
 JAR_OPT = cvfe $(JAR_NAME) $(MAIN_PATH) -C build $(PROJECT_PATH) -C res .
 
 jar : $(BLD)/Interpreter.class
@@ -17,7 +17,8 @@ run : jar
 	java -jar $(JAR_NAME)
 
 
-$(BLD)/Interpreter.class : $(SRC)/Interpreter.java json php
+$(BLD)/Interpreter.class : $(SRC)/Interpreter.java json php\
+		$(BLD)/Vue/TriCaractere.class
 	javac $(JC_OPT) $(SRC)/Interpreter.java
 
 api :	$(BLD)/api/Tree.class \
@@ -64,5 +65,52 @@ $(BLD)/json/JSONToken.class : $(SRC)/json/JSONToken.java
 $(BLD)/json/JSONFormatException.class : $(SRC)/json/JSONFormatException.java
 	javac $(JC_OPT) $(SRC)/json/JSONFormatException.java
 
+vue :
+
+$(BLD)/Vue/TriCaractere.class :	$(SRC)/Vue/TriCaractere.java \
+								$(BLD)/Vue/JSONArray.class \
+								$(BLD)/Vue/JSONBoolean.class \
+								$(BLD)/Vue/JSONObject.class \
+								$(BLD)/Vue/JSONValue.class \
+								$(BLD)/Vue/JSONWhitespace.class \
+								$(BLD)/Vue/Nombre.class \
+								$(BLD)/Vue/Texte.class
+	javac $(JC_OPT) $(SRC)/Vue/TriCaractere.java
+
+$(BLD)/Vue/JSONArray.class : 	$(SRC)/Vue/JSONArray.java \
+								$(BLD)/Vue/JSONBoolean.class \
+								$(BLD)/Vue/JSONObject.class \
+								$(BLD)/Vue/JSONValue.class \
+								$(BLD)/Vue/JSONWhitespace.class \
+								$(BLD)/Vue/Nombre.class \
+								$(BLD)/Vue/Texte.class
+	javac $(JC_OPT) $(SRC)/Vue/JSONArray.java
+
+$(BLD)/Vue/JSONBoolean.class : 	$(SRC)/Vue/JSONBoolean.java
+	javac $(JC_OPT) $(SRC)/Vue/JSONBoolean.java
+
+$(BLD)/Vue/JSONObject.class : 	$(SRC)/Vue/JSONObject.java \
+								$(BLD)/Vue/JSONBoolean.class \
+								$(BLD)/Vue/JSONArray.class \
+								$(BLD)/Vue/JSONValue.class \
+								$(BLD)/Vue/JSONWhitespace.class \
+								$(BLD)/Vue/Nombre.class \
+								$(BLD)/Vue/Texte.class
+	javac $(JC_OPT) $(SRC)/Vue/JSONObject.java
+	
+$(BLD)/Vue/JSONValue.class : 	$(SRC)/Vue/JSONValue.java
+	javac $(JC_OPT) $(SRC)/Vue/JSONValue.java
+
+$(BLD)/Vue/JSONWhitespace.class : 	$(SRC)/Vue/JSONWhitespace.java
+	javac $(JC_OPT) $(SRC)/Vue/JSONWhitespace.java
+
+$(BLD)/Vue/Nombre.class : 	$(SRC)/Vue/Nombre.java
+	javac $(JC_OPT) $(SRC)/Vue/Nombre.java
+
+$(BLD)/Vue/Texte.class : 	$(SRC)/Vue/Texte.java
+	javac $(JC_OPT) $(SRC)/Vue/Texte.java
+
+$(BLD)/Vue/Window.class : 	$(SRC)/Vue/Window.java
+	javac $(JC_OPT) $(SRC)/Vue/Window.java
 php :
 	echo "WIP"
