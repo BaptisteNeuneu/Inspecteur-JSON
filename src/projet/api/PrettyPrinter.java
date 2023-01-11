@@ -30,4 +30,11 @@ public abstract class PrettyPrinter {
     public List<ColoredString> getHighlightedText() {
         return null;
     }
+
+    public String Prettyprint(){
+        String printarbre = "";
+        
+        return printarbre;
+    }
+
 }

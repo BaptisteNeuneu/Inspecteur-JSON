@@ -21,9 +21,7 @@ public class Interpreter {
             String s = "";
             while (fr.ready()) s += fr.readLine().trim();
             Tree<Token> tree = JSONParser.deserialize(s);
-            Token a = tree.get("");
-                String h = (String)a.getValue();
-                System.out.println(h);
+            System.out.println(tree.toString());
         } catch (JSONFormatException e) {
             System.err.println("Format JSON non-conforme.");
             System.err.println("Pour plus d'informations : https://www.rfc-editor.org/rfc/rfc8259.html");

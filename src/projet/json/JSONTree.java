@@ -244,4 +244,9 @@ public class JSONTree implements Tree<Token> {
     public void setRoot(Token root) {
         this.root = root;
     }
+
+    @Override
+    public String toString() {
+        return root.toString();
+    }
 }

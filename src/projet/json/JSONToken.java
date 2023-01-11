@@ -75,4 +75,26 @@ public class JSONToken implements Token {
         if (valueType != ValueType.DICT) throw new IllegalStateException("Impossible d'accéder à la valeur d'un token non dict.");
         return dict;
     }
+
+    public String toString() {
+        String str = "";
+        switch (valueType) {
+            case ARRAY:
+                str += "[\n";
+                for (Token t : list) str += t.toString() + "\n";
+                str += "]\n";
+                break;
+
+            case DICT:
+                str += "{\n";
+                for (Map.Entry<String, Token> t : dict.entrySet()) str += t.getKey() + " = " + t.getValue().toString() + "\n";
+                str += "}\n";
+                break;
+
+            default:
+                return value.toString();
+        }
+
+        return str;
+    }
 }
