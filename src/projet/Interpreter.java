@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import projet.Vue.TriCaractere;
 import projet.api.Token;
 import projet.api.Tree;
 import projet.json.JSONFormatException;
@@ -16,14 +17,13 @@ import projet.json.JSONParser;
 public class Interpreter {
     public static void main(String[] args) {
 
+        TriCaractere traitementprint = new TriCaractere();
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (BufferedReader fr = new BufferedReader(new InputStreamReader(cl.getResourceAsStream("json_examples/json1.json")))) {
             String s = "";
             while (fr.ready()) s += fr.readLine().trim();
             Tree<Token> tree = JSONParser.deserialize(s);
-            Token a = tree.get("");
-                String h = (String)a.getValue();
-                System.out.println(h);
+            traitementprint.PrintConsole(tree);
         } catch (JSONFormatException e) {
             System.err.println("Format JSON non-conforme.");
             System.err.println("Pour plus d'informations : https://www.rfc-editor.org/rfc/rfc8259.html");
