@@ -5,9 +5,7 @@ import java.util.Map;
 
 import projet.api.Token;
 import projet.json.JSONToken;
-import projet.json.JSONTree;
 import projet.api.Tree;
-import projet.api.ValueType;
 
 
 public class TriCaractere {

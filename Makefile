@@ -7,7 +7,7 @@ JC_OPT = -implicit:none -d build -classpath build -sourcepath "src:tmp"
 
 MAIN_PATH = $(PROJECT_PATH).Interpreter
 
-JAR_NAME = projet.jar
+JAR_NAME = Inspecteur.jar
 JAR_OPT = cvfe $(JAR_NAME) $(MAIN_PATH) -C build $(PROJECT_PATH) -C res .
 
 jar : $(BLD)/Interpreter.class
