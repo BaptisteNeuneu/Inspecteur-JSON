@@ -3,6 +3,9 @@ package projet.view;
 import java.awt.*;
 import javax.swing.*;
 
+import projet.controller.RefreshButtonSwitcher;
+import projet.controller.TestFichier;
+
 public class Accueil extends JFrame{
 
     public Accueil(){
@@ -27,8 +30,8 @@ public class Accueil extends JFrame{
         constraints.gridy = 0;
         constraints.gridwidth = 3;
         constraints.gridheight = 1;
-        constraints.anchor = GridBagConstraints.CENTER;
-        constraints.weightx = 1.0f;
+        constraints.anchor = GridBagConstraints.SOUTH;
+        constraints.weightx = 6.0f;
         constraints.weighty = 1.0f;
         this.add(texteFichier, constraints);
 
@@ -39,11 +42,13 @@ public class Accueil extends JFrame{
         constraints.gridheight = 1;
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.insets = new Insets(0,50,0,0);
         constraints.weightx = 1.0f;
-        constraints.weighty = 1.0f;
+        constraints.weighty = 2.0f;
         this.add(zoneURL, constraints);
 
-        JButton refresh = new JButton("Lancer");
+        JButton refresh = new JButton(new ImageIcon("res/icons/refresh.png"));
+        refresh.setEnabled(false);
         constraints.gridx = 1;
         constraints.gridy = 1;
         constraints.gridwidth = 2;
@@ -54,14 +59,15 @@ public class Accueil extends JFrame{
         constraints.weighty = 1.0f;
         this.add(refresh, constraints);
 
-        JTextArea result = new JTextArea();
+        JTabbedPane result = new JTabbedPane();
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 2;
         constraints.gridheight = 1;
         constraints.fill = GridBagConstraints.BOTH;
         constraints.anchor = GridBagConstraints.EAST;
-        constraints.weightx = 5.0f;
+        constraints.insets = new Insets(0,50,50,0);
+        constraints.weightx = 6.0f;
         constraints.weighty = 5.0f;
         this.add(result, constraints);
 
@@ -77,6 +83,11 @@ public class Accueil extends JFrame{
         this.add(details, constraints);
 
 
+        /*
+         * Action du bouton refresh
+         */
+        zoneURL.getDocument().addDocumentListener(new RefreshButtonSwitcher(refresh, zoneURL));
+        refresh.addActionListener(new TestFichier(zoneURL));
 
 
         setVisible(true);

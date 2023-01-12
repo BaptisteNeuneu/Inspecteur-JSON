@@ -18,7 +18,10 @@ run : jar
 
 
 $(BLD)/Interpreter.class : $(SRC)/Interpreter.java json php\
-		$(BLD)/Vue/TriCaractere.class
+		$(BLD)/Vue/TriCaractere.class \
+		$(BLD)/view/Accueil.class \
+		$(BLD)/json/JSONPrettyPrinter.class \
+		$(BLD)/php/PHPPrettyPrinter.class 
 	javac $(JC_OPT) $(SRC)/Interpreter.java
 
 api :	$(BLD)/api/Tree.class \
@@ -39,6 +42,13 @@ $(BLD)/api/TreeFormatter.class :	$(SRC)/api/TreeFormatter.java \
 									$(BLD)/api/Tree.class \
 									$(BLD)/api/Token.class
 	javac $(JC_OPT) $(SRC)/api/TreeFormatter.java
+
+$(BLD)/api/PrettyPrinter.class : 	$(SRC)/api/PrettyPrinter.java \
+									$(BLD)/api/ColoredString.class 
+	javac $(JC_OPT) $(SRC)/api/PrettyPrinter.java
+
+$(BLD)/api/ColoredString.class : $(SRC)/api/ColoredString.java
+	javac $(JC_OPT) $(SRC)/api/ColoredString.java
 
 json :	api $(BLD)/json/JSONParser.class
 
@@ -64,6 +74,10 @@ $(BLD)/json/JSONToken.class : $(SRC)/json/JSONToken.java
 
 $(BLD)/json/JSONFormatException.class : $(SRC)/json/JSONFormatException.java
 	javac $(JC_OPT) $(SRC)/json/JSONFormatException.java
+
+$(BLD)/json/JSONPrettyPrinter.class : 	$(SRC)/json/JSONPrettyPrinter.java \
+										$(BLD)/api/PrettyPrinter.class
+	javac $(JC_OPT) $(SRC)/json/JSONPrettyPrinter.java
 
 vue :
 
@@ -112,5 +126,30 @@ $(BLD)/Vue/Texte.class : 	$(SRC)/Vue/Texte.java
 
 $(BLD)/Vue/Window.class : 	$(SRC)/Vue/Window.java
 	javac $(JC_OPT) $(SRC)/Vue/Window.java
+
 php :
+
+$(BLD)/php/PHPPrettyPrinter.class : $(SRC)/php/PHPPrettyPrinter.java \
+									$(BLD)/api/PrettyPrinter.class
+	javac $(JC_OPT) $(SRC)/php/PHPPrettyPrinter.java
+
 	echo "WIP"
+
+
+view :
+
+$(BLD)/view/Accueil.class : $(SRC)/view/Accueil.java \
+							$(BLD)/controller/RefreshButtonSwitcher.class \
+							$(BLD)/controller/TestFichier.class
+	javac $(JC_OPT) $(SRC)/view/Accueil.java
+
+controller :
+
+$(BLD)/controller/RefreshButtonSwitcher.class :	$(SRC)/controller/RefreshButtonSwitcher.java 						
+	javac $(JC_OPT) $(SRC)/controller/RefreshButtonSwitcher.java
+
+$(BLD)/controller/TestFichier.class : 	$(SRC)/controller/TestFichier.java \
+										$(BLD)/Vue/TriCaractere.class \
+										$(BLD)/json/JSONPrettyPrinter.class \
+										$(BLD)/php/PHPPrettyPrinter.class 
+	javac $(JC_OPT) $(SRC)/controller/TestFichier.java
