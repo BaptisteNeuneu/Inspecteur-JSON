@@ -1,5 +1,6 @@
 package projet.api;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,9 @@ public abstract class PrettyPrinter {
     //Spécifie comment séparer les valeurs entres elles.
     private String dictValueDelimiter;
     private String tableValueDelimiter;
+
+    //Liste de couples valeur couleur
+    private List<ColoredString> listOfColoredStrings = new LinkedList<ColoredString>();
 
     public PrettyPrinter(Tree<Token> tree) {
         this.tree = tree;
@@ -93,8 +97,56 @@ public abstract class PrettyPrinter {
      * représentant l'arbre et ses données avec coloration syntaxique.
      * @return l'ensemble des données de l'arbre avec coloration syntaxique
      */
-    public List<ColoredString> getHighlightedText() {
-        return null;
+    public List<ColoredString> getHighlightedText(Token token, int indent) {
+        String formattedString = "";
+        String indentString = "";
+        for (int i = 0; i < indent; i++) indentString += "  ";
+        formattedString += indentString;
+
+        switch (token.getValueType()) {
+            case DICT: {
+                formattedString = dictFormatter.replaceAll("\\{indents\\}", indentString);
+
+                String formattedValues = "";
+                Map<String, Token> dict = token.getMembers();
+                
+                boolean first = true;
+                for (Map.Entry<String, Token> entry : dict.entrySet()) {
+                    String formattedValue = (first ? "" : dictValueDelimiter) + indentString + dictEntryFormatter;
+                    formattedValue = formattedValue.replaceAll("\\{key\\}", entry.getKey());
+                    formattedValue = formattedValue.replaceAll("\\{value\\}", getHighlightedText(entry.getValue(), indent + 1));
+                    formattedValues += formattedValue;
+                    if (first) first = false;
+                }
+                
+                formattedString = formattedString.replaceAll("\\{values\\}", formattedValues);
+                break;
+            }
+
+            case ARRAY: {
+                formattedString = tableFormatter.replaceAll("\\{indents\\}", indentString);
+
+                String formattedValues = "";
+                List<Token> list = token.getValues();
+
+                for (Integer i = 0; i < list.size(); i++) {
+                    String formattedValue = indentString + tableEntryFormatter;
+                    formattedValue = formattedValue.replaceAll("\\{index\\}", i.toString());
+                    formattedValue = formattedValue.replaceAll("\\{value\\}", getHighlightedText(list.get(i), indent + 1));
+                    formattedValues += formattedValue;
+                    if (i < list.size() - 1) formattedValues += tableValueDelimiter;
+                }
+
+                formattedString = formattedString.replaceAll("\\{values\\}", formattedValues);
+                break;
+            }
+
+            default:
+                formattedString = token.getValue().toString();
+                break;
+        }
+
+        return this.listOfColoredStrings;
     }
 
     /**

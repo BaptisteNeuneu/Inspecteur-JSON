@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.io.*;
 
 import javax.swing.JOptionPane;
+import java.awt.Container;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextPane;
 import javax.swing.text.JTextComponent;
 
 import projet.api.PrettyPrinter;
@@ -16,9 +19,11 @@ import projet.php.PHPPrettyPrinter;
 public class TestFichier implements ActionListener {
 
     private JTextComponent zoneURL;
+    private JTabbedPane zoneResult;
 
-    public TestFichier(JTextComponent zoneURL){
+    public TestFichier(JTextComponent zoneURL, JTabbedPane zoneResult){
         this.zoneURL = zoneURL;
+        this.zoneResult = zoneResult;
     }
 
     @Override
@@ -28,8 +33,15 @@ public class TestFichier implements ActionListener {
             String s = "";
             while (fr.ready()) s += fr.readLine().trim();
             Tree<Token> tree = JSONParser.deserialize(s);
-            PrettyPrinter prettyPrinter = new PHPPrettyPrinter(tree);
-            System.out.println(prettyPrinter.prettyString());
+            
+            // Affichage JSON
+            Container resultPaneJSON = (Container) this.zoneResult.getComponentAt(0);
+            new AffichageJSON(tree, resultPaneJSON);
+
+            // Affichage PHP
+            PrettyPrinter prettyPrinterPHP = new PHPPrettyPrinter(tree);
+            JTextPane resultPanePHP = (JTextPane) this.zoneResult.getComponentAt(1);
+            resultPanePHP.setText(prettyPrinterPHP.prettyString());
         } catch (JSONFormatException e) {
             System.err.println("Format JSON non-conforme.");
             System.err.println("Pour plus d'informations : https://www.rfc-editor.org/rfc/rfc8259.html");

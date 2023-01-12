@@ -11,7 +11,6 @@ import projet.api.Tree;
 import projet.json.JSONFormatException;
 import projet.json.JSONParser;
 import projet.json.JSONPrettyPrinter;
-import projet.php.PHPPrettyPrinter;
 import projet.view.Accueil;
 
 /***
@@ -24,7 +23,7 @@ public class Interpreter {
             String s = "";
             while (fr.ready()) s += fr.readLine().trim();
             Tree<Token> tree = JSONParser.deserialize(s);
-            PrettyPrinter prettyPrinter = new PHPPrettyPrinter(tree);
+            PrettyPrinter prettyPrinter = new JSONPrettyPrinter(tree);
             System.out.println(prettyPrinter.prettyString());
         } catch (JSONFormatException e) {
             System.err.println("Format JSON non-conforme.");

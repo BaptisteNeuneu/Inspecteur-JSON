@@ -84,10 +84,17 @@ public class Accueil extends JFrame{
 
 
         /*
+         * Mise en place du JTabbedPan
+         */
+        Container textPaneJSON = new Container();
+        result.addTab("JSON",textPaneJSON);
+        result.addTab("PHP",new JTextPane());
+
+        /*
          * Action du bouton refresh
          */
         zoneURL.getDocument().addDocumentListener(new RefreshButtonSwitcher(refresh, zoneURL));
-        refresh.addActionListener(new TestFichier(zoneURL));
+        refresh.addActionListener(new TestFichier(zoneURL, result));
 
 
         setVisible(true);
