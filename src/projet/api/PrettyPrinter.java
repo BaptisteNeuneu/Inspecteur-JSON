@@ -179,6 +179,7 @@ public abstract class PrettyPrinter {
      * @param indent l'indentation 
      */
     public void createColoredTree(Token token, int indent){
+        //TODO: créer un colored node en lisant l'arbre pour dict et array
         String formattedString = "";
         String indentString = "";
         for (int i = 0; i < indent; i++) indentString += "  ";

@@ -29,6 +29,7 @@ public class AffichageJSON {
                 value.setForeground(couple.getColor());
                 paneToFill.add(value);
             } else {
+                // Lorsqu'un string est trop long il est découpé en plusieurs lignes en ajoutant les mots un à un
                 String newString = string;
                 int sizeOfWord = 0;
                 for (int i = 0; i<string.length();i+=sizeOfWord){
