@@ -31,7 +31,7 @@ public class Accueil extends JFrame{
         constraints.gridwidth = 3;
         constraints.gridheight = 1;
         constraints.anchor = GridBagConstraints.SOUTH;
-        constraints.weightx = 6.0f;
+        constraints.weightx = 1.0f;
         constraints.weighty = 1.0f;
         this.add(texteFichier, constraints);
 
@@ -67,7 +67,7 @@ public class Accueil extends JFrame{
         constraints.fill = GridBagConstraints.BOTH;
         constraints.anchor = GridBagConstraints.EAST;
         constraints.insets = new Insets(0,50,50,0);
-        constraints.weightx = 6.0f;
+        constraints.weightx = 10.0f;
         constraints.weighty = 5.0f;
         this.add(result, constraints);
 
@@ -78,7 +78,7 @@ public class Accueil extends JFrame{
         constraints.gridheight = 1;
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.NONE;
-        constraints.weightx = 1.0f;
+        constraints.weightx = 0.0f;
         constraints.weighty = 1.0f;
         this.add(details, constraints);
 
@@ -87,6 +87,7 @@ public class Accueil extends JFrame{
          * Mise en place du JTabbedPan
          */
         Container textPaneJSON = new Container();
+        textPaneJSON.setLayout(new FlowLayout(3,0,0));
         result.addTab("JSON",textPaneJSON);
         result.addTab("PHP",new JTextPane());
 

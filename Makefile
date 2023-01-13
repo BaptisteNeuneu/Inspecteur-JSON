@@ -44,11 +44,9 @@ $(BLD)/api/TreeFormatter.class :	$(SRC)/api/TreeFormatter.java \
 	javac $(JC_OPT) $(SRC)/api/TreeFormatter.java
 
 $(BLD)/api/PrettyPrinter.class : 	$(SRC)/api/PrettyPrinter.java \
-									$(BLD)/api/ColoredString.class 
+									$(BLD)/controller/ColoredNode.class
 	javac $(JC_OPT) $(SRC)/api/PrettyPrinter.java
 
-$(BLD)/api/ColoredString.class : $(SRC)/api/ColoredString.java
-	javac $(JC_OPT) $(SRC)/api/ColoredString.java
 
 json :	api $(BLD)/json/JSONParser.class
 
@@ -151,5 +149,16 @@ $(BLD)/controller/RefreshButtonSwitcher.class :	$(SRC)/controller/RefreshButtonS
 $(BLD)/controller/TestFichier.class : 	$(SRC)/controller/TestFichier.java \
 										$(BLD)/Vue/TriCaractere.class \
 										$(BLD)/json/JSONPrettyPrinter.class \
-										$(BLD)/php/PHPPrettyPrinter.class 
+										$(BLD)/php/PHPPrettyPrinter.class \
+										$(BLD)/controller/AffichageJSON.class 
 	javac $(JC_OPT) $(SRC)/controller/TestFichier.java
+
+$(BLD)/controller/ColoredString.class :	$(SRC)/controller/ColoredString.java
+	javac $(JC_OPT) $(SRC)/controller/ColoredString.java
+
+$(BLD)/controller/ColoredNode.class : 	$(SRC)/controller/ColoredNode.java \
+										$(BLD)/controller/ColoredString.class
+	javac $(JC_OPT) $(SRC)/controller/ColoredNode.java
+
+$(BLD)/controller/AffichageJSON.class :	$(SRC)/controller/AffichageJSON.java
+	javac $(JC_OPT) $(SRC)/controller/AffichageJSON.java
