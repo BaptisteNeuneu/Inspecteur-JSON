@@ -1,7 +1,6 @@
 package projet.view;
 
-import java.awt.Container;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.List;
 import javax.swing.JLabel;
 import projet.json.JSONPrettyPrinter;
@@ -12,10 +11,12 @@ import projet.controller.ColoredString;
 
 public class AffichageJSON {
     
-    private Container paneToFill;
+    private JLabel paneToFill;
 
     public AffichageJSON(Tree<Token> tree, Container paneJSON){
-        this.paneToFill = paneJSON;
+        this.paneToFill = new JLabel();
+        paneJSON.add(this.paneToFill);
+        this.paneToFill.setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
         PrettyPrinter prettyPrinter = new JSONPrettyPrinter(tree);
         List<ColoredString> coloredValues = prettyPrinter.getHighlightedText();
         prettyColoredPrint(coloredValues);
@@ -33,9 +34,10 @@ public class AffichageJSON {
                     this.paneToFill.add(emptySpace);
                 }
                 JLabel value = new JLabel(string);
-                System.out.println(couple.getString());
                 value.setForeground(couple.getColor());
+                value.setBackground(couple.getColor());
                 this.paneToFill.add(value);
+                System.out.println(value.toString());
                 // Si il y a un retour à la ligne, ce dernier est effectué en insérant un JLabel vide
                 if(couple.getString().contains("\n")){
                     JLabel emptySpace = new JLabel("");
@@ -52,20 +54,27 @@ public class AffichageJSON {
                         if (newString.substring(j,j+1).equals(" ")){
                             word = newString.substring(0, j+1);
                             JLabel value = new JLabel(word);
+                            value.setBackground(couple.getColor());
                             value.setForeground(couple.getColor());
                             this.paneToFill.add(value);
-                            if(word.contains("\n")){
-                                JLabel emptySpace = new JLabel("");  
-                                emptySpace.setPreferredSize(new Dimension(3000,0));
-                                this.paneToFill.add(emptySpace);
-                            }
                             newString = newString.substring(j+1);
                         }
                     }
                     sizeOfWord = word.length();
                 }
+                JLabel value = new JLabel(newString);
+                value.setBackground(couple.getColor());
+                value.setForeground(couple.getColor());
+                this.paneToFill.add(value);
+                if(newString.contains("\n")){
+                    JLabel emptySpace = new JLabel("");  
+                    emptySpace.setPreferredSize(new Dimension(3000,0));
+                    this.paneToFill.add(emptySpace);
+                }
             }
-            this.paneToFill.repaint();
+            System.out.println(this.paneToFill.getComponentCount());
         }
+        this.paneToFill.getParent().getParent().repaint();
+        this.paneToFill.getParent().getParent().revalidate();
     }
 }

@@ -92,7 +92,6 @@ public class Accueil extends JFrame{
         //TODO: Ajouter une ScrollBar
         Container textPaneJSON = new Container();
         Container textPanePHP = new Container();
-        textPaneJSON.setLayout(new FlowLayout(3,0,0));
         result.addTab("JSON",new JScrollPane(textPaneJSON));
         result.addTab("PHP", new JScrollPane(textPanePHP));
 
