@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.io.*;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+
 import java.awt.Container;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -36,12 +38,16 @@ public class TestFichier implements ActionListener {
             Tree<Token> tree = JSONParser.deserialize(s);
             
             // Affichage JSON
-            Container resultPaneJSON = (Container) this.zoneResult.getComponentAt(0);
+            JScrollPane scrollPaneJSON = (JScrollPane) this.zoneResult.getComponentAt(0);
+            Container resultPaneJSON = (Container) scrollPaneJSON.getViewport();
             new AffichageJSON(tree, resultPaneJSON);
 
             // Affichage PHP
             PrettyPrinter prettyPrinterPHP = new PHPPrettyPrinter(tree);
-            JTextPane resultPanePHP = (JTextPane) this.zoneResult.getComponentAt(1);
+            JScrollPane scrollPanePHP = (JScrollPane) this.zoneResult.getComponentAt(1);
+            Container resultContainerPHP = (Container) scrollPanePHP.getViewport();
+            JTextPane resultPanePHP = new JTextPane();
+            resultContainerPHP.add(resultPanePHP);
             resultPanePHP.setText(prettyPrinterPHP.prettyString());
         } catch (JSONFormatException e) {
             System.err.println("Format JSON non-conforme.");

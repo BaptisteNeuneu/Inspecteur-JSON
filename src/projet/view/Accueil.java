@@ -62,8 +62,6 @@ public class Accueil extends JFrame{
         this.add(refresh, constraints);
 
         JTabbedPane result = new JTabbedPane();
-        JScrollPane scrollBar = new JScrollPane(result);
-        scrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
@@ -74,7 +72,6 @@ public class Accueil extends JFrame{
         constraints.weightx = 0.80f;
         constraints.weighty = 0.70f;
         this.add(result, constraints);
-        this.add(scrollBar, constraints);
 
         JButton details = new JButton("Detailler");
         constraints.gridx = 1;
@@ -94,9 +91,10 @@ public class Accueil extends JFrame{
          */
         //TODO: Ajouter une ScrollBar
         Container textPaneJSON = new Container();
+        Container textPanePHP = new Container();
         textPaneJSON.setLayout(new FlowLayout(3,0,0));
-        result.addTab("JSON",textPaneJSON);
-        result.addTab("PHP",new JTextPane());
+        result.addTab("JSON",new JScrollPane(textPaneJSON));
+        result.addTab("PHP", new JScrollPane(textPanePHP));
 
         /*
          * Action du bouton refresh
