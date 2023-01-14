@@ -141,6 +141,10 @@ $(BLD)/view/Accueil.class : $(SRC)/view/Accueil.java \
 							$(BLD)/controller/TestFichier.class
 	javac $(JC_OPT) $(SRC)/view/Accueil.java
 
+
+$(BLD)/view/AffichageJSON.class :	$(SRC)/view/AffichageJSON.java
+	javac $(JC_OPT) $(SRC)/view/AffichageJSON.java
+
 controller :
 
 $(BLD)/controller/RefreshButtonSwitcher.class :	$(SRC)/controller/RefreshButtonSwitcher.java 						
@@ -150,7 +154,7 @@ $(BLD)/controller/TestFichier.class : 	$(SRC)/controller/TestFichier.java \
 										$(BLD)/Vue/TriCaractere.class \
 										$(BLD)/json/JSONPrettyPrinter.class \
 										$(BLD)/php/PHPPrettyPrinter.class \
-										$(BLD)/controller/AffichageJSON.class 
+										$(BLD)/view/AffichageJSON.class 
 	javac $(JC_OPT) $(SRC)/controller/TestFichier.java
 
 $(BLD)/controller/ColoredString.class :	$(SRC)/controller/ColoredString.java
@@ -159,6 +163,3 @@ $(BLD)/controller/ColoredString.class :	$(SRC)/controller/ColoredString.java
 $(BLD)/controller/ColoredNode.class : 	$(SRC)/controller/ColoredNode.java \
 										$(BLD)/controller/ColoredString.class
 	javac $(JC_OPT) $(SRC)/controller/ColoredNode.java
-
-$(BLD)/controller/AffichageJSON.class :	$(SRC)/controller/AffichageJSON.java
-	javac $(JC_OPT) $(SRC)/controller/AffichageJSON.java

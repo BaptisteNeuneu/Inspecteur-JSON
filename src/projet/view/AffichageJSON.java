@@ -1,4 +1,4 @@
-package projet.controller;
+package projet.view;
 
 import java.awt.Container;
 import java.util.List;
@@ -7,6 +7,7 @@ import projet.json.JSONPrettyPrinter;
 import projet.api.PrettyPrinter;
 import projet.api.Token;
 import projet.api.Tree;
+import projet.controller.ColoredString;
 
 public class AffichageJSON {
     

@@ -15,6 +15,7 @@ import projet.api.Tree;
 import projet.json.JSONFormatException;
 import projet.json.JSONParser;
 import projet.php.PHPPrettyPrinter;
+import projet.view.AffichageJSON;
 
 public class TestFichier implements ActionListener {
 

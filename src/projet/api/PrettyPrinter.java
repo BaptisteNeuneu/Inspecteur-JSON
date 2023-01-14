@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import projet.controller.ColoredNode;
 import projet.controller.ColoredString;
 
 public abstract class PrettyPrinter {
@@ -26,8 +25,6 @@ public abstract class PrettyPrinter {
 
     //Liste de couples valeur couleur
     private List<ColoredString> listOfColoredStrings = new LinkedList<ColoredString>();
-    //Racine de l'arbre de couples valeur couleur
-    private ColoredNode coloredRoot;
 
     // Couleurs pour la coloration syntaxique
     private Color separateurs = Color.BLACK;
@@ -179,63 +176,61 @@ public abstract class PrettyPrinter {
      * @param indent l'indentation 
      */
     public void createColoredTree(Token token, int indent){
-        //TODO: créer un colored node en lisant l'arbre pour dict et array
-        String formattedString = "";
         String indentString = "";
         for (int i = 0; i < indent; i++) indentString += "  ";
-        formattedString += indentString;
 
         switch (token.getValueType()) {
             case DICT: {
-                formattedString = dictFormatter.replaceAll("\\{indents\\}", indentString);
-
-                String formattedValues = "";
+                this.listOfColoredStrings.add(new ColoredString("{\n",separateurs));
                 Map<String, Token> dict = token.getMembers();
                 
                 boolean first = true;
                 for (Map.Entry<String, Token> entry : dict.entrySet()) {
-                    String formattedValue = (first ? "" : dictValueDelimiter) + indentString + dictEntryFormatter;
-                    formattedValue = formattedValue.replaceAll("\\{key\\}", entry.getKey());
-                    formattedValue = formattedValue.replaceAll("\\{value\\}", printToken(entry.getValue(), indent + 1));
-                    formattedValues += formattedValue;
+                    if (!first){
+                        this.listOfColoredStrings.add(new ColoredString(",\n",separateurs));
+                    }
+                    
+                    this.listOfColoredStrings.add(new ColoredString((indentString) + "\"",separateurs));
+                    this.listOfColoredStrings.add(new ColoredString(entry.getKey(),cles));
+                    this.listOfColoredStrings.add(new ColoredString("\": ",separateurs));
+
+                    createColoredTree(entry.getValue(), indent+2);
                     if (first) first = false;
                 }
-                
-                formattedString = formattedString.replaceAll("\\{values\\}", formattedValues);
+                this.listOfColoredStrings.add(new ColoredString(indentString + "}\n",separateurs));
                 break;
             }
 
             case ARRAY: {
-                formattedString = tableFormatter.replaceAll("\\{indents\\}", indentString);
+                this.listOfColoredStrings.add(new ColoredString("[\n",separateurs));
 
-                String formattedValues = "";
                 List<Token> list = token.getValues();
 
+                boolean first = true;
                 for (Integer i = 0; i < list.size(); i++) {
-                    String formattedValue = indentString + tableEntryFormatter;
-                    formattedValue = formattedValue.replaceAll("\\{index\\}", i.toString());
-                    formattedValue = formattedValue.replaceAll("\\{value\\}", printToken(list.get(i), indent + 1));
-                    formattedValues += formattedValue;
-                    if (i < list.size() - 1) formattedValues += tableValueDelimiter;
+                    if (!first){
+                        this.listOfColoredStrings.add(new ColoredString(",\n",separateurs));
+                    }
+                    createColoredTree(list.get(i), indent+2);
+                    if (first) first = false;
                 }
-
-                formattedString = formattedString.replaceAll("\\{values\\}", formattedValues);
+                this.listOfColoredStrings.add(new ColoredString(indentString + "]\n",separateurs));
                 break;
             }
 
             default:
-                formattedString = token.getValue().toString();
+                String formattedString = token.getValue().toString();
                 switch (token.getValueType()){
                     case NUMBER:
-                        listOfColoredStrings.add(new ColoredString(formattedString, nombres));
+                        this.listOfColoredStrings.add(new ColoredString(formattedString, nombres));
                         break;
                     case STRING:
-                        listOfColoredStrings.add(new ColoredString("\"", separateurs));
-                        listOfColoredStrings.add(new ColoredString(formattedString.substring(1, formattedString.length()-1), strings));
-                        listOfColoredStrings.add(new ColoredString("\"", separateurs));
+                        this.listOfColoredStrings.add(new ColoredString("\"", separateurs));
+                        this.listOfColoredStrings.add(new ColoredString(formattedString.substring(1, formattedString.length()-1), strings));
+                        this.listOfColoredStrings.add(new ColoredString("\"", separateurs));
                         break;
                     default:
-                        listOfColoredStrings.add(new ColoredString(formattedString, otherValues));
+                        this.listOfColoredStrings.add(new ColoredString(formattedString, otherValues));
                         break;
                 }
                 break;
