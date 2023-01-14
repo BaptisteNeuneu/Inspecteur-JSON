@@ -8,4 +8,4 @@ Horville Ewen
 Lancement de l'appli :
 "make run" ou "make jar" puis "java -jar Inspecteur.jar"
 Il est possible de préciser l'URL du fichier JSON en option de la dernière commande.
-Si le fichier n'est pas précisé, une fenêtre s'ouvre, sinon un affichage simple JSON apparait en console (phase 1).
+Si le fichier n'est pas précisé, une fenêtre s'ouvre (phase 2), sinon un affichage simple JSON apparait en console (phase 1).

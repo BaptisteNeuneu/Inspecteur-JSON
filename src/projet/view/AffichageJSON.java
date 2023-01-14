@@ -1,6 +1,7 @@
 package projet.view;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.util.List;
 import javax.swing.JLabel;
 import projet.json.JSONPrettyPrinter;
@@ -21,14 +22,26 @@ public class AffichageJSON {
     }
     
     public void prettyColoredPrint(List<ColoredString> coloredCouples){
-        paneToFill.removeAll();
+        this.paneToFill.removeAll();
         for (ColoredString couple : coloredCouples){
             String string = couple.getString();
             if (string.length()<=50){
+                // Si l'élément est un crochet ou une accolade fermante il faut passer une ligne avant de l'afficher
+                if(couple.getString().matches(" *[\\}\\]]$")){
+                    JLabel emptySpace = new JLabel("");  
+                    emptySpace.setPreferredSize(new Dimension(3000,0));
+                    this.paneToFill.add(emptySpace);
+                }
                 JLabel value = new JLabel(string);
                 System.out.println(couple.getString());
                 value.setForeground(couple.getColor());
-                paneToFill.add(value);
+                this.paneToFill.add(value);
+                // Si il y a un retour à la ligne, ce dernier est effectué en insérant un JLabel vide
+                if(couple.getString().contains("\n")){
+                    JLabel emptySpace = new JLabel("");
+                    emptySpace.setPreferredSize(new Dimension(3000,0));
+                    this.paneToFill.add(emptySpace);
+                }
             } else {
                 // Lorsqu'un string est trop long il est découpé en plusieurs lignes en ajoutant les mots un à un
                 String newString = string;
@@ -40,14 +53,19 @@ public class AffichageJSON {
                             word = newString.substring(0, j+1);
                             JLabel value = new JLabel(word);
                             value.setForeground(couple.getColor());
-                            paneToFill.add(value);
+                            this.paneToFill.add(value);
+                            if(word.contains("\n")){
+                                JLabel emptySpace = new JLabel("");  
+                                emptySpace.setPreferredSize(new Dimension(3000,0));
+                                this.paneToFill.add(emptySpace);
+                            }
                             newString = newString.substring(j+1);
-                            sizeOfWord = word.length();
-                            System.out.println("i == "+i+", j == "+j+", size of word == "+word.length());
                         }
                     }
+                    sizeOfWord = word.length();
                 }
             }
+            this.paneToFill.repaint();
         }
     }
 }

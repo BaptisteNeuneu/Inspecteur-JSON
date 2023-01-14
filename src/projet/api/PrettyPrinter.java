@@ -175,7 +175,7 @@ public abstract class PrettyPrinter {
      * @param token la racine de l'arbre des valeurs
      * @param indent l'indentation 
      */
-    public void createColoredTree(Token token, int indent){
+    public void createColoredTree(Token token, int indent, boolean isIndentified ){
         String indentString = "";
         for (int i = 0; i < indent; i++) indentString += "  ";
 
@@ -194,10 +194,10 @@ public abstract class PrettyPrinter {
                     this.listOfColoredStrings.add(new ColoredString(entry.getKey(),cles));
                     this.listOfColoredStrings.add(new ColoredString("\": ",separateurs));
 
-                    createColoredTree(entry.getValue(), indent+2);
+                    createColoredTree(entry.getValue(), indent+2, false);
                     if (first) first = false;
                 }
-                this.listOfColoredStrings.add(new ColoredString(indentString + "}\n",separateurs));
+                this.listOfColoredStrings.add(new ColoredString(indentString + "}",separateurs));
                 break;
             }
 
@@ -211,10 +211,10 @@ public abstract class PrettyPrinter {
                     if (!first){
                         this.listOfColoredStrings.add(new ColoredString(",\n",separateurs));
                     }
-                    createColoredTree(list.get(i), indent+2);
+                    createColoredTree(list.get(i), indent+2, true);
                     if (first) first = false;
                 }
-                this.listOfColoredStrings.add(new ColoredString(indentString + "]\n",separateurs));
+                this.listOfColoredStrings.add(new ColoredString(indentString + "]",separateurs));
                 break;
             }
 
@@ -222,15 +222,15 @@ public abstract class PrettyPrinter {
                 String formattedString = token.getValue().toString();
                 switch (token.getValueType()){
                     case NUMBER:
-                        this.listOfColoredStrings.add(new ColoredString(formattedString, nombres));
+                        this.listOfColoredStrings.add(new ColoredString(isIndentified ? indentString+formattedString : formattedString, nombres));
                         break;
                     case STRING:
-                        this.listOfColoredStrings.add(new ColoredString("\"", separateurs));
+                        this.listOfColoredStrings.add(new ColoredString(isIndentified ? indentString+"\"" : "\"", separateurs));
                         this.listOfColoredStrings.add(new ColoredString(formattedString.substring(1, formattedString.length()-1), strings));
                         this.listOfColoredStrings.add(new ColoredString("\"", separateurs));
                         break;
                     default:
-                        this.listOfColoredStrings.add(new ColoredString(formattedString, otherValues));
+                        this.listOfColoredStrings.add(new ColoredString(isIndentified ? indentString+formattedString : formattedString, otherValues));
                         break;
                 }
                 break;
@@ -246,7 +246,7 @@ public abstract class PrettyPrinter {
      */
     public List<ColoredString> getHighlightedText() {
         if (tree.getRoot() == null) this.listOfColoredStrings.add(new ColoredString("", Color.BLACK));
-        createColoredTree(tree.getRoot(), 0);
+        createColoredTree(tree.getRoot(), 0, true);
         return this.listOfColoredStrings;
     }
 
