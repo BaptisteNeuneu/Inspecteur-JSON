@@ -45,7 +45,7 @@ public class ColoredNode {
     public ColoredString toColoredString() {
         if (fils.size() > 0) {
             if (isFolded()) {
-                return new ColoredString("[...] (" + fils.size() + " élément" + (fils.size() > 1 ? "s" : "") + ")", Color.BLACK);
+                return new ColoredString("[...] (" + fils.size() + " élément" + (fils.size() > 1 ? "s" : "") + ")", Color.WHITE);
             } else {
                 return value;
             }
