@@ -8,7 +8,7 @@ import java.util.Map;
 import projet.api.Token;
 
 /***
- * La classe <code>JSONValueParser</code> traite les valeurs JSON.
+ * La classe <code>JSONValueParser</code> analyse la syntaxe les valeurs JSON.
  */
 public class JSONValueParser {
 

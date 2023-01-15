@@ -5,8 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * La classe <code>ColoredNode</code> Hérite de la classe <code>ColoredString</code>.
- * Elle permet de gérer un arbre de coloredString, comme elle connait ses successeurs.
+ * Représente un noeud contenant un couple chaine de caractères couleur afin de faire de la coloration syntaxique.
  *  
  * @version 1.1
  */
