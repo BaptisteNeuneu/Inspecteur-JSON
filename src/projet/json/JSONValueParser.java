@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import projet.api.Token;
 
@@ -235,164 +236,51 @@ public class JSONValueParser {
     }
 
     public static JSONToken treatNumber(String number) throws JSONFormatException {
-        String newNombre= "";
-        boolean exponentielle = false;
-        boolean nombre = false;
-        boolean presenceoperateur = false;
+
+        char[] chars = number.toCharArray();
+        
+        boolean negative = false;
+        boolean exponential = false;
         boolean fraction = false;
 
-        for(char character : number.toCharArray()){
-            if(fraction == true){
-                switch(character){
-                    case '0':
-                        newNombre = newNombre+character;
-                    
-                    case '1':
-                        newNombre = newNombre + character;
-                    case '2':
-                        newNombre = newNombre + character;
-                    case '3':
-                        newNombre = newNombre + character;
-                    case '4':
-                        newNombre = newNombre + character;
-                    case '5':
-                        newNombre = newNombre + character;
-                    case '6':
-                        newNombre = newNombre + character;
-                    case '7':
-                        newNombre = newNombre + character;
-                    case '8':
-                        newNombre = newNombre + character;
-                    case '9':
-                        newNombre = newNombre + character;
+        String numberValue = "";
+        String exponentialValue = "";
 
-                    default :
-                        newNombre = newNombre+character;                    
-                        fraction = false;
-
-            }
-        }
-
-            if (exponentielle == true) {
-                switch(character){
-
-                    case '-':
-                    if(presenceoperateur == false){
-                        newNombre = newNombre+character;
-                        presenceoperateur = true;
-                    }
-
-                    case '+':
-                        if (presenceoperateur == false) {
-                            newNombre = newNombre + character;
-                            presenceoperateur = true;
-                        }
-
-                    case '0':
-                    newNombre = newNombre+character;
-                    
-
-                    case '1':
-                        newNombre = newNombre + character;
-                    case '2':
-                        newNombre = newNombre + character;
-                    case '3':
-                        newNombre = newNombre + character;
-                    case '4':
-                        newNombre = newNombre + character;
-                    case '5':
-                        newNombre = newNombre + character;
-                    case '6':
-                        newNombre = newNombre + character;
-                    case '7':
-                        newNombre = newNombre + character;
-                    case '8':
-                        newNombre = newNombre + character;
-                    case '9':
-                        newNombre = newNombre + character;
-                    default:
-                    newNombre = newNombre + character;
-                    exponentielle = false;
-                    presenceoperateur = false;
-                }
-            }
-
-            if (nombre == true) {
-            switch(character){
-                case '0':
-                    newNombre = newNombre + character;
-                case '1':
-                    newNombre = newNombre + character;
-                case '2':
-                    newNombre = newNombre + character;
-                case '3':
-                    newNombre = newNombre + character;
-                case '4':
-                    newNombre = newNombre + character;
-                case '5':
-                    newNombre = newNombre + character;
-                case '6':
-                    newNombre = newNombre + character;
-                case '7':
-                    newNombre = newNombre + character;
-                case '8':
-                    newNombre = newNombre + character;
-                case '9':
-                    newNombre = newNombre + character;
-                default :
-                newNombre = newNombre+character;
-                nombre = false;
-            }
-            }
-            switch(character){
-
-
-
+        for (int index = 0; index < chars.length; index++) {
+            switch (chars[index]) {
                 case '-':
-                newNombre = newNombre+character;
+                    if (index != 0 && chars[index-1] != 'e' && chars[index-1] != 'E') throw new JSONFormatException("Invalid number format.");
+                    if (exponential) exponentialValue += '-';
+                    else numberValue += '-';
+                    negative = true;
+                    break;
 
-                case '0':
+                case '+':
+                    if (chars[index-1] != 'e' && chars[index-1] != 'E') throw new JSONFormatException("Invalid number format.");
+                    break;
 
-                case '1':
-                    newNombre = newNombre + character;
-                    nombre = true;
-                case '2':
-                    newNombre = newNombre + character;
-                    nombre = true;
-                case '3':
-                    newNombre = newNombre + character;
-                    nombre = true;
-                case '4':
-                    newNombre = newNombre + character;
-                    nombre = true;
-                case '5':
-                    newNombre = newNombre + character;
-                    nombre = true;
-                case '6':
-                    newNombre = newNombre + character;
-                    nombre = true;
-                case '7':
-                    newNombre = newNombre + character;
-                    nombre = true;
-                case '8':
-                    newNombre = newNombre + character;
-                    nombre = true;
-                case '9':
-                    newNombre = newNombre + character;
-                    nombre = true;
                 case '.':
-                    newNombre = newNombre + character;
+                    if (fraction || exponential) throw new JSONFormatException("Invalid number format.");
+                    numberValue += '.';
                     fraction = true;
-                case 'E':
-                  exponentielle = true;
-                  newNombre = newNombre+character;                    
+                    break;
 
                 case 'e':
-                    exponentielle = true;
-                    newNombre = newNombre + character;
-
+                case 'E':
+                    if (exponential) throw new JSONFormatException("Invalid number format.");
+                    exponential = true;
+                    break;
+                    
+                default: {
+                    if (exponential) {
+                        exponentialValue += chars[index];
+                    } else {
+                        numberValue += chars[index];
+                    }
+                }
             }
         }
-        return new JSONToken(0);
+
+        return new JSONToken(0, number);
     }
 }

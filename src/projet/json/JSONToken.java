@@ -18,9 +18,9 @@ public class JSONToken implements Token {
         this.value = value;
     }
 
-    public JSONToken(Number value) {
+    public JSONToken(Number number, String format) {
         this.valueType = ValueType.NUMBER;
-        this.value = value;
+        this.value = format;
     }
 
     public JSONToken(Boolean value) {
