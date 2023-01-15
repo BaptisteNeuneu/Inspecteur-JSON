@@ -6,8 +6,16 @@ import javax.swing.*;
 import projet.controller.RefreshButtonSwitcher;
 import projet.controller.TestFichier;
 
+/**
+ * La classe <code>Accueil</code> est une JFrame. Il s'agit de l'interface graphique de l'application.
+ * 
+ * @version 1.1
+ */
 public class Accueil extends JFrame{
 
+    /**
+    * Constructeur qui initialise la fenêtre et ses éléments
+    */
     public Accueil(){
         /*
          * Parametres fenetre

@@ -9,11 +9,22 @@ import projet.api.PrettyPrinter;
 import projet.api.Token;
 import projet.api.Tree;
 
+/**
+ * La classe <code>AffichageJSON</code> gère l'affichage d'un fichier JSON dans l'interface graphique.
+ * 
+ * @version 1.1
+ */
 public class AffichageJSON {
     
     private JLabel paneToFill;
     ColoredNode highlightTreeRoot;
 
+    /**
+    * Constructeur qui indique quel est l'arbre syntaxique à afficher, et dans quel container
+    *
+    * @param tree l'arbre syntaxique
+    * @param paneJSON le container dans lequel réaliser l'affichage
+    */
     public AffichageJSON(Tree<Token> tree, Container paneJSON){
         this.paneToFill = new JLabel();
         paneJSON.add(this.paneToFill);
@@ -23,6 +34,11 @@ public class AffichageJSON {
         prettyColoredPrint();
     }
 
+    /**
+    * Méthode qui affiche les couples chaine de caractères / couleur d'un arbre syntaxique
+    *
+    * @param node la racine de l'arbre syntaxique coloré
+    */
     private void addToText(ColoredNode node) {
         ColoredString couple = node.toColoredString();
 
@@ -84,10 +100,16 @@ public class AffichageJSON {
         }
     }
 
+    /**
+    * Getter pour obtenir la racine d'un arbre syntaxique coloré 
+    */
     public ColoredNode getHighlightTreeRoot() {
         return highlightTreeRoot;
     }
     
+    /**
+    * Méthode qui refresh l'affichage 
+    */
     public void prettyColoredPrint() {
         this.paneToFill.removeAll();
         addToText(highlightTreeRoot);

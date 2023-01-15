@@ -4,7 +4,7 @@ import projet.api.Token;
 import projet.api.Tree;
 
 /***
- * Implémentation de la classe Tree pour les documents JSON.
+ * La classe <code>JSONPrettyPrinter</code> implémente la classe Tree pour les documents JSON.
  */
 public class JSONTree implements Tree<Token> {
 

@@ -5,6 +5,11 @@ import java.util.Map;
 import projet.api.Token;
 import projet.api.ValueType;
 
+/**
+ * La classe <code>JSONToken</code> implémente la classe Token. Sert dans la création de l'arbre syntaxique.
+ * 
+ * @version 1.1
+ */
 public class JSONToken implements Token {
 
     private Object value;

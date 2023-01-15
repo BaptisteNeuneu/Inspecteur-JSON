@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /***
- * Représente un token dans une arborescence de données d'un Tree.
+ * La classe <code>Token</code> représente un token dans une arborescence de données d'un Tree.
  * Un token peut être un dictionnaire, un tableau ou une valeur au choix de ValueType
  */
 public interface Token {

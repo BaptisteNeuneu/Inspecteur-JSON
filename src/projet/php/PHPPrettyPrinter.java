@@ -4,6 +4,11 @@ import projet.api.PrettyPrinter;
 import projet.api.Token;
 import projet.api.Tree;
 
+/**
+ * La classe <code>PHPPrettyPrinter</code> hérite de la classe PrettyPrinter et définit ses élements de syntaxe pour correspondre à du PHP
+ * 
+ * @version 1.1
+ */
 public class PHPPrettyPrinter extends PrettyPrinter{
     public PHPPrettyPrinter(Tree<Token> tree) {
         super(tree);

@@ -20,12 +20,26 @@ import projet.json.JSONParser;
 import projet.php.PHPPrettyPrinter;
 import projet.view.AffichageJSON;
 
+/**
+ * La classe <code>TestFichier</code> vérifie si un string renseigné correspond à un fichier json respectant la syntaxe
+ * Implémente ActionListener
+ * 
+ * @version 1.1
+ */
 public class TestFichier implements ActionListener {
 
     private JTextComponent zoneURL;
     private JTabbedPane zoneResult;
     private JButton details;
 
+    /**
+    * Constructeur qui définit la zone du texte à tester, le composant où afficher ses résultats 
+    * et le bouton qui permettra plus tard de déplier les informations
+    * 
+    * @param zoneURL la zone du texte à tester
+    * @param zoneResult le composant où afficher les résultats
+    * @param details le bouton pour déplier
+    */
     public TestFichier(JTextComponent zoneURL, JTabbedPane zoneResult, JButton details){
         this.zoneURL = zoneURL;
         this.zoneResult = zoneResult;
@@ -33,6 +47,11 @@ public class TestFichier implements ActionListener {
     }
 
     @Override
+    /**
+    * l'implémentation de ActionListener
+    * 
+    * @param event
+    */
     public void actionPerformed(ActionEvent event) {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         try (BufferedReader fr = new BufferedReader(new InputStreamReader(cl.getResourceAsStream(this.zoneURL.getText())))) {

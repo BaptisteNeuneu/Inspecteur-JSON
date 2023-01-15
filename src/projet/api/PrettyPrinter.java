@@ -4,6 +4,11 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * La classe <code>PrettyPrinter</code> permet de créer l'affichage demandé à partir d'un arbre syntaxique
+ *  
+ * @version 1.1
+ */
 public abstract class PrettyPrinter {
     
     private Tree<Token> tree;
@@ -30,15 +35,20 @@ public abstract class PrettyPrinter {
     private Color strings = new Color(206, 145, 120);
     private Color otherValues = new Color(86, 156, 214);
 
+    /**
+   * Constructeur qui initialise l'arbre syntaxique sur lequel il va travailler
+   *
+   * @param tree l'arbre syntaxique
+   */
     public PrettyPrinter(Tree<Token> tree) {
         this.tree = tree;
     }
     
+    //Getters et setters.
     protected String getDictFormatter() {
         return dictFormatter;
     }
 
-    //Getters et setters.
     protected void setDictFormatter(String dictFormatter) {
         this.dictFormatter = dictFormatter;
     }
@@ -171,6 +181,7 @@ public abstract class PrettyPrinter {
      * Créer un arbre de ColoredNodes à partir de l'arbre de valeurs et rempli la liste de ColoredString
      * @param token la racine de l'arbre des valeurs
      * @param indent l'indentation 
+     * @param isIndentified définit si l'indentation est à afficher ou non
      */
     public void createHighlightTree(Token token, ColoredNode parent, int indent, boolean isIndentified ){
         String indentString = "";

@@ -5,10 +5,21 @@ import java.awt.event.MouseListener;
 
 import projet.api.ColoredNode;
 
+/**
+ * La classe <code>FoldingListener</code> gère le dépliage / pliage d'un noeud. Implemente MouseListener
+ * 
+ * @version 1.1
+ */
 public class FoldingListener implements MouseListener {
     private final AffichageJSON affichageJSON;
     private final ColoredNode node;
 
+    /**
+    * Constructeur qui indique l'objet qui gère l'affichage, et le noeud concerné
+    *
+    * @param affichageJSON l'objet qui gère l'affichage
+    * @param node le noeud concerné
+    */
     FoldingListener(AffichageJSON affichageJSON, ColoredNode node) {
         this.affichageJSON = affichageJSON;
         this.node = node;

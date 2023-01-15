@@ -13,8 +13,10 @@ import projet.json.JSONParser;
 import projet.json.JSONPrettyPrinter;
 import projet.view.Accueil;
 
-/***
- * Début du programme, choisit entre le mode prettyPrint à la console et le mode graphique.
+/**
+ * La classe <code>Interpreter</code> est le début du programme, choisit entre le mode prettyPrint à la console et le mode graphique.
+ * 
+ * @version 1.1
  */
 public class Interpreter {
     public static void main(String[] args) {
@@ -40,4 +42,3 @@ public class Interpreter {
     }
 }
 
-/* */

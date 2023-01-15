@@ -1,7 +1,7 @@
 package projet.api;
 
 /***
- * Représente un arbre stockant des données simples.
+ * La classe <code>Tree\<T\></code> représente un arbre stockant des données simples.
  * Les données sont stockées sous un chemin d'accès unique.
  */
 public interface Tree<T> {

@@ -16,6 +16,10 @@ jar : $(BLD)/Interpreter.class
 run : jar
 	java -jar $(JAR_NAME)
 
+doc :
+	javadoc -d doc $(SRC)/Interpreter.java $(SRC)/api/*.java $(SRC)/controller/*.java $(SRC)/json/*.java $(SRC)/php/*.java $(SRC)/view/*.java 
+	
+
 
 $(BLD)/Interpreter.class : $(SRC)/Interpreter.java json php\
 		$(BLD)/view/Accueil.class \

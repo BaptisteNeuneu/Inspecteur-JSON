@@ -6,6 +6,11 @@ import java.util.Objects;
 import projet.api.Token;
 import projet.api.Tree;
 
+/**
+ * La classe <code>JSONParser</code> transforme un fichier json en arbre syntaxique
+ * 
+ * @version 1.1
+ */
 public class JSONParser {
 
     /***
