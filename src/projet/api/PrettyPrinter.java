@@ -109,7 +109,7 @@ public abstract class PrettyPrinter {
     private String printToken(Token token, int indent) {
         String formattedString = "";
         String indentString = "";
-        for (int i = 0; i < indent; i++) indentString += "\t";
+        for (int i = 0; i < indent; i++) indentString += "  ";
         formattedString += indentString;
 
         switch (token.getValueType()) {

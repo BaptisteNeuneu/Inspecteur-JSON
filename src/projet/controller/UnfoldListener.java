@@ -3,6 +3,8 @@ package projet.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+
 import projet.api.ColoredNode;
 import projet.view.AffichageJSON;
 
@@ -24,5 +26,7 @@ final class UnfoldListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         deployNode(affichage.getHighlightTreeRoot());
         affichage.prettyColoredPrint();
+        JButton unflodButton = (JButton)e.getSource();
+        unflodButton.setEnabled(false);
     }
 }

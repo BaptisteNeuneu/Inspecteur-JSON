@@ -18,7 +18,6 @@ run : jar
 
 
 $(BLD)/Interpreter.class : $(SRC)/Interpreter.java json php\
-		$(BLD)/Vue/TriCaractere.class \
 		$(BLD)/view/Accueil.class \
 		$(BLD)/json/JSONPrettyPrinter.class \
 		$(BLD)/php/PHPPrettyPrinter.class 
@@ -44,8 +43,15 @@ $(BLD)/api/TreeFormatter.class :	$(SRC)/api/TreeFormatter.java \
 	javac $(JC_OPT) $(SRC)/api/TreeFormatter.java
 
 $(BLD)/api/PrettyPrinter.class : 	$(SRC)/api/PrettyPrinter.java \
-									$(BLD)/controller/ColoredNode.class
+									$(BLD)/api/ColoredNode.class
 	javac $(JC_OPT) $(SRC)/api/PrettyPrinter.java
+
+$(BLD)/api/ColoredString.class :	$(SRC)/api/ColoredString.java
+	javac $(JC_OPT) $(SRC)/api/ColoredString.java
+
+$(BLD)/api/ColoredNode.class : 	$(SRC)/api/ColoredNode.java \
+										$(BLD)/api/ColoredString.class
+	javac $(JC_OPT) $(SRC)/api/ColoredNode.java
 
 
 json :	api $(BLD)/json/JSONParser.class
@@ -53,7 +59,8 @@ json :	api $(BLD)/json/JSONParser.class
 $(BLD)/json/BlockType.class : $(SRC)/json/BlockType.java 
 	javac $(JC_OPT) $(SRC)/json/BlockType.java
 
-$(BLD)/json/JSONValueParser.class : $(SRC)/json/JSONValueParser.java 
+$(BLD)/json/JSONValueParser.class : $(SRC)/json/JSONValueParser.java \
+									$(BLD)/json/JSONFormatException.class
 	javac $(JC_OPT) $(SRC)/json/JSONValueParser.java
 
 $(BLD)/json/JSONParser.class :	$(SRC)/json/JSONParser.java \
@@ -91,8 +98,12 @@ $(BLD)/view/Accueil.class : $(SRC)/view/Accueil.java \
 	javac $(JC_OPT) $(SRC)/view/Accueil.java
 
 
+$(BLD)/view/FoldingListener.class :	$(SRC)/view/FoldingListener.java 
+	
+
 $(BLD)/view/AffichageJSON.class :	$(SRC)/view/AffichageJSON.java
-	javac $(JC_OPT) $(SRC)/view/AffichageJSON.java
+	javac $(JC_OPT) $(SRC)/view/FoldingListener.java $(SRC)/view/AffichageJSON.java
+
 
 controller :
 
@@ -100,15 +111,12 @@ $(BLD)/controller/RefreshButtonSwitcher.class :	$(SRC)/controller/RefreshButtonS
 	javac $(JC_OPT) $(SRC)/controller/RefreshButtonSwitcher.java
 
 $(BLD)/controller/TestFichier.class : 	$(SRC)/controller/TestFichier.java \
-										$(BLD)/Vue/TriCaractere.class \
 										$(BLD)/json/JSONPrettyPrinter.class \
 										$(BLD)/php/PHPPrettyPrinter.class \
-										$(BLD)/view/AffichageJSON.class 
+										$(BLD)/view/AffichageJSON.class \
+										$(BLD)/controller/UnfoldListener.class
 	javac $(JC_OPT) $(SRC)/controller/TestFichier.java
 
-$(BLD)/controller/ColoredString.class :	$(SRC)/controller/ColoredString.java
-	javac $(JC_OPT) $(SRC)/controller/ColoredString.java
+$(BLD)/controller/UnfoldListener.class :	$(SRC)/controller/UnfoldListener.java 						
+	javac $(JC_OPT) $(SRC)/controller/UnfoldListener.java
 
-$(BLD)/controller/ColoredNode.class : 	$(SRC)/controller/ColoredNode.java \
-										$(BLD)/controller/ColoredString.class
-	javac $(JC_OPT) $(SRC)/controller/ColoredNode.java

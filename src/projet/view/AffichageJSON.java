@@ -91,7 +91,7 @@ public class AffichageJSON {
     public void prettyColoredPrint() {
         this.paneToFill.removeAll();
         addToText(highlightTreeRoot);
-        this.paneToFill.getParent().getParent().repaint();
-        this.paneToFill.getParent().getParent().revalidate();
+        this.paneToFill.getParent().repaint();
+        this.paneToFill.getParent().revalidate();
     }
 }
