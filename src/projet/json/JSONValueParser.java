@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import projet.api.Token;
 
@@ -239,20 +238,13 @@ public class JSONValueParser {
 
         char[] chars = number.toCharArray();
         
-        boolean negative = false;
         boolean exponential = false;
         boolean fraction = false;
-
-        String numberValue = "";
-        String exponentialValue = "";
 
         for (int index = 0; index < chars.length; index++) {
             switch (chars[index]) {
                 case '-':
                     if (index != 0 && chars[index-1] != 'e' && chars[index-1] != 'E') throw new JSONFormatException("Invalid number format.");
-                    if (exponential) exponentialValue += '-';
-                    else numberValue += '-';
-                    negative = true;
                     break;
 
                 case '+':
@@ -261,7 +253,6 @@ public class JSONValueParser {
 
                 case '.':
                     if (fraction || exponential) throw new JSONFormatException("Invalid number format.");
-                    numberValue += '.';
                     fraction = true;
                     break;
 
@@ -270,14 +261,6 @@ public class JSONValueParser {
                     if (exponential) throw new JSONFormatException("Invalid number format.");
                     exponential = true;
                     break;
-                    
-                default: {
-                    if (exponential) {
-                        exponentialValue += chars[index];
-                    } else {
-                        numberValue += chars[index];
-                    }
-                }
             }
         }
 
