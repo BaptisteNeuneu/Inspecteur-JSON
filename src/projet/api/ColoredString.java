@@ -1,4 +1,4 @@
-package projet.controller;
+package projet.api;
 
 import java.awt.Color;
 

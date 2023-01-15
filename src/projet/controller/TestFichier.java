@@ -3,6 +3,7 @@ package projet.controller;
 import java.awt.event.*;
 import java.io.*;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
@@ -23,10 +24,12 @@ public class TestFichier implements ActionListener {
 
     private JTextComponent zoneURL;
     private JTabbedPane zoneResult;
+    private JButton details;
 
-    public TestFichier(JTextComponent zoneURL, JTabbedPane zoneResult){
+    public TestFichier(JTextComponent zoneURL, JTabbedPane zoneResult, JButton details){
         this.zoneURL = zoneURL;
         this.zoneResult = zoneResult;
+        this.details = details;
     }
 
     @Override
@@ -39,8 +42,10 @@ public class TestFichier implements ActionListener {
             
             // Affichage JSON
             JScrollPane scrollPaneJSON = (JScrollPane) this.zoneResult.getComponentAt(0);
-            Container resultPaneJSON = (Container) scrollPaneJSON.getViewport();
-            new AffichageJSON(tree, resultPaneJSON);
+            Container resultPaneJSON = (Container)scrollPaneJSON.getViewport();
+            AffichageJSON affichage = new AffichageJSON(tree, resultPaneJSON);
+
+            details.addActionListener(new UnfoldListener(affichage));
 
             // Affichage PHP
             PrettyPrinter prettyPrinterPHP = new PHPPrettyPrinter(tree);

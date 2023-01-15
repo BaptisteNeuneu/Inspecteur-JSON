@@ -18,26 +18,24 @@ import projet.view.Accueil;
  */
 public class Interpreter {
     public static void main(String[] args) {
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        try (BufferedReader fr = new BufferedReader(new InputStreamReader(cl.getResourceAsStream(args[0])))) {
-            String s = "";
-            while (fr.ready()) s += fr.readLine().trim();
-            Tree<Token> tree = JSONParser.deserialize(s);
-            PrettyPrinter prettyPrinter = new JSONPrettyPrinter(tree);
-            System.out.println(prettyPrinter.prettyString());
-        } catch (JSONFormatException e) {
-            System.err.println("Format JSON non-conforme.");
-            System.err.println("Pour plus d'informations : https://www.rfc-editor.org/rfc/rfc8259.html");
+        if (args.length == 0) {
             new Accueil();
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found.");
-            new Accueil();
-        } catch (IOException e) {
-            System.err.println("Reading error");
-            new Accueil();
-        } catch (ArrayIndexOutOfBoundsException e){
-            System.err.println("No argument given");
-            new Accueil();
+        } else {
+            ClassLoader cl = Thread.currentThread().getContextClassLoader();
+            try (BufferedReader fr = new BufferedReader(new InputStreamReader(cl.getResourceAsStream(args[0])))) {
+                String s = "";
+                while (fr.ready()) s += fr.readLine().trim();
+                Tree<Token> tree = JSONParser.deserialize(s);
+                PrettyPrinter prettyPrinter = new JSONPrettyPrinter(tree);
+                System.out.println(prettyPrinter.prettyString());
+            } catch (JSONFormatException e) {
+                System.err.println("Format JSON non-conforme.");
+                System.err.println("Pour plus d'informations : https://www.rfc-editor.org/rfc/rfc8259.html");
+            } catch (FileNotFoundException e) {
+                System.err.println("File not found.");
+            } catch (IOException e) {
+                System.err.println("Reading error");
+            }
         }
     }
 }

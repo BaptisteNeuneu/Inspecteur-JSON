@@ -77,62 +77,11 @@ $(BLD)/json/JSONPrettyPrinter.class : 	$(SRC)/json/JSONPrettyPrinter.java \
 										$(BLD)/api/PrettyPrinter.class
 	javac $(JC_OPT) $(SRC)/json/JSONPrettyPrinter.java
 
-vue :
-
-$(BLD)/Vue/TriCaractere.class :	$(SRC)/Vue/TriCaractere.java \
-								$(BLD)/Vue/JSONArray.class \
-								$(BLD)/Vue/JSONBoolean.class \
-								$(BLD)/Vue/JSONObject.class \
-								$(BLD)/Vue/JSONValue.class \
-								$(BLD)/Vue/JSONWhitespace.class \
-								$(BLD)/Vue/Nombre.class \
-								$(BLD)/Vue/Texte.class
-	javac $(JC_OPT) $(SRC)/Vue/TriCaractere.java
-
-$(BLD)/Vue/JSONArray.class : 	$(SRC)/Vue/JSONArray.java \
-								$(BLD)/Vue/JSONBoolean.class \
-								$(BLD)/Vue/JSONObject.class \
-								$(BLD)/Vue/JSONValue.class \
-								$(BLD)/Vue/JSONWhitespace.class \
-								$(BLD)/Vue/Nombre.class \
-								$(BLD)/Vue/Texte.class
-	javac $(JC_OPT) $(SRC)/Vue/JSONArray.java
-
-$(BLD)/Vue/JSONBoolean.class : 	$(SRC)/Vue/JSONBoolean.java
-	javac $(JC_OPT) $(SRC)/Vue/JSONBoolean.java
-
-$(BLD)/Vue/JSONObject.class : 	$(SRC)/Vue/JSONObject.java \
-								$(BLD)/Vue/JSONBoolean.class \
-								$(BLD)/Vue/JSONArray.class \
-								$(BLD)/Vue/JSONValue.class \
-								$(BLD)/Vue/JSONWhitespace.class \
-								$(BLD)/Vue/Nombre.class \
-								$(BLD)/Vue/Texte.class
-	javac $(JC_OPT) $(SRC)/Vue/JSONObject.java
-	
-$(BLD)/Vue/JSONValue.class : 	$(SRC)/Vue/JSONValue.java
-	javac $(JC_OPT) $(SRC)/Vue/JSONValue.java
-
-$(BLD)/Vue/JSONWhitespace.class : 	$(SRC)/Vue/JSONWhitespace.java
-	javac $(JC_OPT) $(SRC)/Vue/JSONWhitespace.java
-
-$(BLD)/Vue/Nombre.class : 	$(SRC)/Vue/Nombre.java
-	javac $(JC_OPT) $(SRC)/Vue/Nombre.java
-
-$(BLD)/Vue/Texte.class : 	$(SRC)/Vue/Texte.java
-	javac $(JC_OPT) $(SRC)/Vue/Texte.java
-
-$(BLD)/Vue/Window.class : 	$(SRC)/Vue/Window.java
-	javac $(JC_OPT) $(SRC)/Vue/Window.java
-
 php :
 
 $(BLD)/php/PHPPrettyPrinter.class : $(SRC)/php/PHPPrettyPrinter.java \
 									$(BLD)/api/PrettyPrinter.class
 	javac $(JC_OPT) $(SRC)/php/PHPPrettyPrinter.java
-
-	echo "WIP"
-
 
 view :
 

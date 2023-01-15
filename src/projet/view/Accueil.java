@@ -15,7 +15,7 @@ public class Accueil extends JFrame{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = new Dimension (screenSize.width *2/3,screenSize.height * 6/7);
 	    this.setSize(frameSize);
-        this.setTitle("Interprétateur JSON");
+        this.setTitle("Inspecteur JSON");
     	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
 
@@ -87,19 +87,23 @@ public class Accueil extends JFrame{
 
 
         /*
-         * Mise en place du JTabbedPan
+         * Mise en place du JTabbedPane
          */
-        //TODO: Ajouter une ScrollBar
         Container textPaneJSON = new Container();
         Container textPanePHP = new Container();
-        result.addTab("JSON",new JScrollPane(textPaneJSON));
-        result.addTab("PHP", new JScrollPane(textPanePHP));
+
+        JScrollPane jsonScroll = new JScrollPane(textPaneJSON);
+        JScrollPane phpPane = new JScrollPane(textPanePHP);
+        jsonScroll.getViewport().setBackground(new Color(30, 30, 30));
+
+        result.addTab("JSON", jsonScroll);
+        result.addTab("PHP", phpPane);
 
         /*
          * Action du bouton refresh
          */
         zoneURL.getDocument().addDocumentListener(new RefreshButtonSwitcher(refresh, zoneURL));
-        refresh.addActionListener(new TestFichier(zoneURL, result));
+        refresh.addActionListener(new TestFichier(zoneURL, result, details));
 
 
         setVisible(true);

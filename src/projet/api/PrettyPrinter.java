@@ -1,11 +1,8 @@
 package projet.api;
 
 import java.awt.Color;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import projet.controller.ColoredString;
 
 public abstract class PrettyPrinter {
     
@@ -24,14 +21,14 @@ public abstract class PrettyPrinter {
     private String tableValueDelimiter;
 
     //Liste de couples valeur couleur
-    private List<ColoredString> listOfColoredStrings = new LinkedList<ColoredString>();
+    private ColoredNode treeRoot;
 
     // Couleurs pour la coloration syntaxique
-    private Color separateurs = Color.BLACK;
-    private Color cles = Color.BLUE;
-    private Color nombres = Color.ORANGE;
-    private Color strings = Color.MAGENTA;
-    private Color otherValues = Color.GREEN;
+    private Color separateurs = new Color(212, 212, 212);
+    private Color cles = new Color(156, 220, 254);
+    private Color nombres = new Color(182, 206, 168);
+    private Color strings = new Color(206, 145, 120);
+    private Color otherValues = new Color(86, 156, 214);
 
     public PrettyPrinter(Tree<Token> tree) {
         this.tree = tree;
@@ -112,7 +109,7 @@ public abstract class PrettyPrinter {
     private String printToken(Token token, int indent) {
         String formattedString = "";
         String indentString = "";
-        for (int i = 0; i < indent; i++) indentString += "  ";
+        for (int i = 0; i < indent; i++) indentString += "\t";
         formattedString += indentString;
 
         switch (token.getValueType()) {
@@ -175,76 +172,110 @@ public abstract class PrettyPrinter {
      * @param token la racine de l'arbre des valeurs
      * @param indent l'indentation 
      */
-    public void createColoredTree(Token token, int indent, boolean isIndentified ){
+    public void createHighlightTree(Token token, ColoredNode parent, int indent, boolean isIndentified ){
         String indentString = "";
-        for (int i = 0; i < indent; i++) indentString += "  ";
+        for (int i = 0; i < indent; i++) indentString += "    ";
 
         switch (token.getValueType()) {
             case DICT: {
-                this.listOfColoredStrings.add(new ColoredString("{\n",separateurs));
+                if (parent == null) {
+                    parent = new ColoredNode("{\n", separateurs);
+                    parent.setFolded(false);
+                    treeRoot = parent;
+                } else {
+                    ColoredNode newParent = new ColoredNode("{\n", separateurs);
+                    parent.addFils(newParent);
+                    parent = newParent;
+                }
+
                 Map<String, Token> dict = token.getMembers();
-                
                 boolean first = true;
+
                 for (Map.Entry<String, Token> entry : dict.entrySet()) {
                     if (!first){
-                        this.listOfColoredStrings.add(new ColoredString(",\n",separateurs));
+                        parent.addFils(new ColoredNode(",\n", separateurs));
                     }
                     
-                    this.listOfColoredStrings.add(new ColoredString(indentString+"\""+entry.getKey()+"\"",cles));
-                    this.listOfColoredStrings.add(new ColoredString(": ",separateurs));
+                    parent.addFils(new ColoredNode(indentString+"\""+entry.getKey()+"\"",cles));
+                    parent.addFils(new ColoredNode(": ",separateurs));
 
-                    createColoredTree(entry.getValue(), indent+2, false);
+                    createHighlightTree(entry.getValue(), parent, indent+1, false);
                     if (first) first = false;
                 }
-                this.listOfColoredStrings.add(new ColoredString(indentString + "}",separateurs));
+
+                parent.addFils(new ColoredNode(indentString + "}", separateurs));
                 break;
             }
 
             case ARRAY: {
-                this.listOfColoredStrings.add(new ColoredString("[\n",separateurs));
+                if (parent == null) {
+                    parent = new ColoredNode("[\n", separateurs);
+                    treeRoot = parent;
+                } else {
+                    ColoredNode newParent = new ColoredNode("[\n", separateurs);
+                    parent.addFils(newParent);
+                    parent = newParent;
+                }
 
                 List<Token> list = token.getValues();
 
                 boolean first = true;
                 for (Integer i = 0; i < list.size(); i++) {
                     if (!first){
-                        this.listOfColoredStrings.add(new ColoredString(",\n",separateurs));
+                        parent.addFils(new ColoredNode(",\n", separateurs));
                     }
-                    createColoredTree(list.get(i), indent+2, true);
+                    createHighlightTree(list.get(i), parent, indent+2, true);
                     if (first) first = false;
                 }
-                this.listOfColoredStrings.add(new ColoredString(indentString + "]",separateurs));
+                parent.addFils(new ColoredNode(indentString + "]", separateurs));
                 break;
             }
 
-            default:
+            default: {
                 String formattedString = token.getValue().toString();
-                switch (token.getValueType()){
+                ColoredNode node;
+                switch (token.getValueType()) {
                     case NUMBER:
-                        this.listOfColoredStrings.add(new ColoredString(isIndentified ? indentString+formattedString : formattedString, nombres));
+                        node = new ColoredNode(isIndentified ? indentString+formattedString : formattedString, nombres);
+                        if (parent == null) {
+                            treeRoot = node;
+                        } else {
+                            parent.addFils(node);
+                        }
                         break;
                     case STRING:
-                        this.listOfColoredStrings.add(new ColoredString(isIndentified ? indentString+formattedString : formattedString, strings));
+                        node = new ColoredNode(isIndentified ? indentString+formattedString : formattedString, strings);
+                        if (parent == null) {
+                            treeRoot = node;
+                        } else {
+                            parent.addFils(node);
+                        }
                         break;
                     default:
-                        this.listOfColoredStrings.add(new ColoredString(isIndentified ? indentString+formattedString : formattedString, otherValues));
+                        node = new ColoredNode(isIndentified ? indentString+formattedString : formattedString, otherValues);
+                        if (parent == null) {
+                            treeRoot = node;
+                        } else {
+                            parent.addFils(node);
+                        }
                         break;
                 }
+
                 break;
+            } 
         }
     }
-
-
 
     /**
      * Retourne une ensemble de chaines de caractère colorées 
      * représentant l'arbre et ses données avec coloration syntaxique.
      * @return l'ensemble des données de l'arbre avec coloration syntaxique
      */
-    public List<ColoredString> getHighlightedText() {
-        if (tree.getRoot() == null) this.listOfColoredStrings.add(new ColoredString("", Color.BLACK));
-        createColoredTree(tree.getRoot(), 0, true);
-        return this.listOfColoredStrings;
+    public ColoredNode getHighlightedText() {
+        if (tree.getRoot() == null) return new ColoredNode("", Color.BLACK);
+        createHighlightTree(tree.getRoot(), null, 0, true);
+
+        return treeRoot;
     }
 
 }
