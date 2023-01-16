@@ -28,8 +28,7 @@ $(BLD)/Interpreter.class : $(SRC)/Interpreter.java json php\
 	javac $(JC_OPT) $(SRC)/Interpreter.java
 
 api :	$(BLD)/api/Tree.class \
-		$(BLD)/api/Token.class \
-		$(BLD)/api/TreeFormatter.class
+		$(BLD)/api/Token.class 
 
 $(BLD)/api/Tree.class :	$(SRC)/api/Tree.java
 	javac $(JC_OPT) $(SRC)/api/Tree.java
@@ -40,11 +39,6 @@ $(BLD)/api/Token.class :	$(SRC)/api/Token.java \
 
 $(BLD)/api/ValueType.class : $(SRC)/api/ValueType.java
 	javac $(JC_OPT) $(SRC)/api/ValueType.java
-
-$(BLD)/api/TreeFormatter.class :	$(SRC)/api/TreeFormatter.java \
-									$(BLD)/api/Tree.class \
-									$(BLD)/api/Token.class
-	javac $(JC_OPT) $(SRC)/api/TreeFormatter.java
 
 $(BLD)/api/PrettyPrinter.class : 	$(SRC)/api/PrettyPrinter.java \
 									$(BLD)/api/ColoredNode.class
